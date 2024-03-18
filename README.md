@@ -3,7 +3,7 @@
 An R package for perfoming enrichment analysis of lipid classes, chain lengths, and degrees of unsaturation.
 
 ## Dependencies
- - [fgsea](https://bioconductor.org/packages/release/bioc/html/fgsea.html)
+[fgsea](https://bioconductor.org/packages/release/bioc/html/fgsea.html)
 
 ## Installation
 ```R
