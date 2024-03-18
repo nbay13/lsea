@@ -38,20 +38,20 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	else anno_df <- annotate.lipid.species(de_tbl[[var_name]])
 
 	anno_df$Chain.new <- anno_df$Chain
-	anno_df$Chain.new[anno_df$Longest.Tail %in% c(12, 14, 15, 16)] <- "12..16"
-	anno_df$Chain.new[anno_df$Longest.Tail %in% c(17, 18, 20)] <- "17..20"
-	anno_df$Chain.new[anno_df$Longest.Tail %in% c(22, 24, 26)] <- "22..26"
+	anno_df$Chain.new[anno_df$Longest.Tail %in% c(12, 14, 15, 16)] <- "12-16"
+	anno_df$Chain.new[anno_df$Longest.Tail %in% c(17, 18, 20)] <- "17-20"
+	anno_df$Chain.new[anno_df$Longest.Tail %in% c(22, 24, 26)] <- "22-26"
 
 	tail_lengths <- split(anno_df$Species, anno_df$Longest.Tail)
 	saturations <- split(anno_df$Species, anno_df$Saturation)
 	classes <- split(anno_df$Species, anno_df$Class)
 	chains <- split(anno_df$Species, anno_df$Chain.new)
 
-	high_res <- split(anno_df$Species, paste(anno_df$Class, anno_df$Saturation, anno_df$Chain.new, sep = "-"))
-	high_res1 <- split(anno_df$Species, paste(anno_df$Class, anno_df$Saturation, sep = "-"))
-	high_res2 <- split(anno_df$Species, paste(anno_df$Class, anno_df$Chain.new, sep = "-"))
-	high_res3 <- split(anno_df$Species, paste(anno_df$Saturation, anno_df$Chain.new, sep = "-"))
-	high_res4 <- split(anno_df$Species, paste(anno_df$Class, anno_df$Saturation, anno_df$Longest.Tail, sep = "-"))
+	high_res <- split(anno_df$Species, paste(anno_df$Class, anno_df$Saturation, anno_df$Chain.new, sep = "_"))
+	high_res1 <- split(anno_df$Species, paste(anno_df$Class, anno_df$Saturation, sep = "_"))
+	high_res2 <- split(anno_df$Species, paste(anno_df$Class, anno_df$Chain.new, sep = "_"))
+	high_res3 <- split(anno_df$Species, paste(anno_df$Saturation, anno_df$Chain.new, sep = "_"))
+	high_res4 <- split(anno_df$Species, paste(anno_df$Class, anno_df$Saturation, anno_df$Longest.Tail, sep = "_"))
 	lipid_lists <- c(tail_lengths, saturations, classes, chains, high_res, high_res1, high_res2, high_res3, high_res4)
 	rnk <- setNames(de_tbl[[rnk_name]], rownames(plot_df))
 	rnk[is.na(rnk)] <- 0
