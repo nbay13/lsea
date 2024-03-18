@@ -55,7 +55,7 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	lipid_lists <- c(tail_lengths, saturations, classes, chains, high_res, high_res1, high_res2, high_res3, high_res4)
 	rnk <- setNames(de_tbl[[rnk_name]], rownames(plot_df))
 	rnk[is.na(rnk)] <- 0
-	res <- fgsea::fgsea(stats = rnk, pathways = lipid_lists, nperm = nperm, minSize = minSize) %>% arrange(NES) %>% data.frame()
+	res <- fgsea::fgseaSimple(stats = rnk, pathways = lipid_lists, nperm = nperm, minSize = minSize) %>% arrange(NES) %>% data.frame()
 	return(res)
 }
 
