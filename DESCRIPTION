@@ -12,5 +12,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 biocViews:
 Imports:
-    compositions
+    compositions,
     fgsea

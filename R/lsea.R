@@ -1,6 +1,7 @@
 
 #' @export clr.transform
 clr.transform <- function(mat){
+	# optimal according to https://doi.org/10.1016/j.chemolab.2021.104248
 	min_const <- min(mat[mat != 0]) * 0.65
 	temp_mat <- mat
 	temp_mat[temp_mat == 0] <- min_const
