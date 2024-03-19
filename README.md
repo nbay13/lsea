@@ -1,4 +1,4 @@
-# lsea - Lipid Structure Enrichment Analysis
+# lsea
 
 `lsea` is an R package for perfoming Lipid Structure Enrichment Analysis (LSEA) of lipid classes, chain lengths, and degrees of unsaturation.
 
