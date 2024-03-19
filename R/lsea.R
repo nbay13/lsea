@@ -61,6 +61,51 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	return(res)
 }
 
+
+temp <- plot_df %>% filter(padj < 0.01 & Class %in% c("PE", "PC", "PE.P", "PE.O")) %>% group_by(Longest.Tail, Total.DBs, signed.log.p > 0) %>% count() %>% data.frame()
+colnames(temp)[3] <- "sign"
+temp$label <- temp$n
+temp$label[temp$n < 2] <- ""
+
+temp <- temp %>% tidyr::complete(Longest.Tail, Total.DBs, sign) %>% data.frame()
+
+gg <- ggplot(temp, aes(x = Longest.Tail, y = Total.DBs, size = n, color = sign, group = sign)) + 
+geom_point(position = position_dodge(width = 0.8)) +
+geom_text(aes(label= label), position = position_dodge(width = 0.8), color = "black") +
+theme_classic() +
+scale_color_manual(values = unname(sample_type_pal[c("PT", "GS")]), limits = c(FALSE, TRUE), labels = c("Bulk Patient", "GS"))
+
+ggsave("GBM lipidomics bulk PT vs GS DE GPL Tail Length - Saturation plot.png", gg, dpi = 1200, height = 3.5, width = 5.25)
+
+# from https://stackoverflow.com/questions/8197559/emulate-ggplot2-default-color-palette
+#' @export gg.colors
+gg.colors <- function(n) {
+  hues = seq(15, 375, length = n + 1)
+  hcl(h = hues, l = 65, c = 100)[1:n]
+}
+
+#' @importFrom ggplot2 ggplot aes position_dodge
+#' @export structure.enrichment.plot
+structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, p_thresh = 0.05, color_pal = NULL, max_size = 4, facet_rows = 3){
+	if(is.null(color_pal)) color_pal <- gg.colors(2)
+	merge_df <- data.frame(cbind(de_tbl, anno_tbl))
+	temp <- plot_df %>% dplyr::filter(padj < p_thresh) %>% dplyr::group_by(Class, Longest.Tail, Total.DBs, dm > 0) %>% dplyr::count() %>% data.frame()
+	colnames(temp)[4] <- "sign"
+	temp$label <- temp$n
+	temp$label[temp$n < 2] <- "" 	
+	temp <- temp %>% tidyr::complete(Longest.Tail, Total.DBs, sign) %>% data.frame()
+	gg <- ggplot(temp %>% na.omit(), aes(x = Longest.Tail, y = Total.DBs, size = n, color = sign, group = sign)) + 
+	ggplot2::geom_point(position = position_dodge(width = 0.8)) +
+	ggplot2::geom_text(aes(label= label), position = position_dodge(width = 0.8), color = "black") +
+	ggplot2::theme_classic() +
+	ggplot2::scale_color_manual(values = color_pal, limits = c(TRUE, FALSE), labels = group_names) +
+	ggplot2::facet_wrap(~ Class, axes = "all_x", nrow = facet_rows) +
+	ggplot2::theme(legend.position = "top") +
+	ggplot2::scale_size(range = c(1, max_size)) + 
+	ggplot2::labs(size = "# of lipid species", color = "Increase in")
+	return(gg)
+}
+
 #' @export get.lipid.category
 get.lipid.category <- function(species){
 	category_list <- list(
