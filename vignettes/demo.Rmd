@@ -1,5 +1,5 @@
 ---
-title: "demo"
+title: "A tutorial on Lipid Structure Enrichment Analysis (LSEA)"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{demo}
@@ -14,22 +14,23 @@ knitr::opts_chunk$set(
 )
 ```
 ### Install dependencies and lsea package
-```{r setup, warning = FALSE, message = FALSE}
+```{r setup, results='hide', warning = FALSE, message = FALSE}
 if(!require("devtools", quietly = TRUE))
     install.packages("devtools")
 install.packages("compositions")
 devtools::install_github("nbay13/lsea")
-library(lsea)
 ```
-### load example data and perform clr transformation
+## load package and example data and perform clr transformation
 ```{r, warning = FALSE}
+library(lsea)
+
 data(comp_data)
 data(labels)
 
 #transform composition data (features x samples) using centered log-ratio transformation
-clr_data <- clr.transform(comp_data)
+clr_data <- lsea::clr.transform(comp_data)
 ```
-### perform differential composition analysis on clr-transformed data
+## perform differential composition analysis on clr-transformed data
 ```{r, warning = FALSE, message = FALSE}
 # to perform a paired t-test (samples must be ordered by pair)
 de_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
@@ -38,15 +39,31 @@ de_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
 w_df <- suppressWarnings(lsea::two.group.row.test(clr_data, labels, test = "w", paired = FALSE))
 ```
 ### inspect the results
-```{r}
-head(de_df)
+```{r, echo = FALSE}
+knitr::kable(head(de_df))
 
-head(w_df)
+knitr::kable(head(w_df))
 ```
-### lipid structure enrichment analysis
+## lipid structure enrichment analysis
 ```{r, warning = FALSE, message = FALSE}
 # we can use the t-statistic to rank lipid species and perform GSEA-like enrichment analysis
 res <- lsea::lsea(de_df, rnk_name = "stat")
-head(res)
+```
+```{r, echo = FALSE}
+knitr::kable(res[1:5,1:5])
+
+knitr::kable(res[279:284,1:5])
+```
+
+
+### lipid species structure annotation
+```{r}
+# under the hood, lsea is using another function to annotate lipid species based on their name and sorts them into multiple lipid sets
+# we can invoke the function 
+lipid_anno <- lsea::annotate.lipid.species(rownames(de_df))
+```
+
+```{r, echo = FALSE}
+knitr::kable(head(lipid_anno))
 ```
 
