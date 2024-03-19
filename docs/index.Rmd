@@ -60,7 +60,6 @@ knitr::kable(res[279:284,1:5])
 ### lipid species structure annotation
 ```{r}
 # LSEA works by annotating the provided lipid species based on their LIPIDMAPS-style name
-# and sorts them into multiple lipid sets based on class, tail length, and double bonds
 lipid_anno <- lsea::annotate.lipid.species(rownames(t_df[order(t_df$pvalue),]))
 ```
 

@@ -783,42 +783,42 @@ ordered by p-value</h5>
 <tr class="odd">
 <td align="left">104</td>
 <td align="left">TG_UFA_12-16</td>
-<td align="right">0.0066863</td>
-<td align="right">0.4747296</td>
+<td align="right">0.0073588</td>
+<td align="right">0.4179793</td>
 <td align="right">0.4911824</td>
-<td align="right">1.707532</td>
+<td align="right">1.718073</td>
 </tr>
 <tr class="even">
 <td align="left">191</td>
 <td align="left">UFA_12-16</td>
-<td align="right">0.0066863</td>
-<td align="right">0.4747296</td>
+<td align="right">0.0073588</td>
+<td align="right">0.4179793</td>
 <td align="right">0.4911824</td>
-<td align="right">1.707532</td>
+<td align="right">1.718073</td>
 </tr>
 <tr class="odd">
 <td align="left">281</td>
 <td align="left">TG_UFA_16</td>
-<td align="right">0.0336901</td>
-<td align="right">0.8599112</td>
+<td align="right">0.0330379</td>
+<td align="right">0.8776702</td>
 <td align="right">0.5313508</td>
-<td align="right">1.553871</td>
+<td align="right">1.576633</td>
 </tr>
 <tr class="even">
 <td align="left">40</td>
 <td align="left">CE_SFA_22-26</td>
-<td align="right">0.0086069</td>
-<td align="right">0.4888711</td>
+<td align="right">0.0066093</td>
+<td align="right">0.4179793</td>
 <td align="right">0.9674523</td>
-<td align="right">1.473453</td>
+<td align="right">1.490907</td>
 </tr>
 <tr class="odd">
 <td align="left">230</td>
 <td align="left">PE.O_MUFA_18</td>
-<td align="right">0.0498587</td>
-<td align="right">0.8599112</td>
+<td align="right">0.0470776</td>
+<td align="right">0.8776702</td>
 <td align="right">0.8365140</td>
-<td align="right">1.428350</td>
+<td align="right">1.441490</td>
 </tr>
 </tbody>
 </table>
@@ -838,58 +838,57 @@ ordered by p-value</h5>
 <tr class="odd">
 <td align="left">153</td>
 <td align="left">FA_12-16</td>
-<td align="right">0.0385697</td>
-<td align="right">0.8599112</td>
+<td align="right">0.0399602</td>
+<td align="right">0.8776702</td>
 <td align="right">-0.7230966</td>
-<td align="right">-1.549150</td>
+<td align="right">-1.549969</td>
 </tr>
 <tr class="even">
 <td align="left">61</td>
 <td align="left">HexCER_MUFA_22-26</td>
-<td align="right">0.0257131</td>
-<td align="right">0.8599112</td>
+<td align="right">0.0260437</td>
+<td align="right">0.8776702</td>
 <td align="right">-0.7448246</td>
-<td align="right">-1.595700</td>
+<td align="right">-1.596543</td>
 </tr>
 <tr class="odd">
 <td align="left">157</td>
 <td align="left">HexCER_22-26</td>
-<td align="right">0.0257131</td>
-<td align="right">0.8599112</td>
+<td align="right">0.0260437</td>
+<td align="right">0.8776702</td>
 <td align="right">-0.7448246</td>
-<td align="right">-1.595700</td>
+<td align="right">-1.596543</td>
 </tr>
 <tr class="even">
 <td align="left">277</td>
 <td align="left">TG_SFA_18</td>
-<td align="right">0.0285542</td>
-<td align="right">0.8599112</td>
+<td align="right">0.0307508</td>
+<td align="right">0.8776702</td>
 <td align="right">-0.6808962</td>
-<td align="right">-1.604466</td>
+<td align="right">-1.600025</td>
 </tr>
 <tr class="odd">
 <td align="left">193</td>
 <td align="left">CE_PUFA_18</td>
-<td align="right">0.0033650</td>
-<td align="right">0.4747296</td>
+<td align="right">0.0048067</td>
+<td align="right">0.4179793</td>
 <td align="right">-0.9356382</td>
-<td align="right">-1.616434</td>
+<td align="right">-1.608295</td>
 </tr>
 <tr class="even">
 <td align="left">144</td>
 <td align="left">CE_17-20</td>
-<td align="right">0.0053774</td>
-<td align="right">0.4747296</td>
+<td align="right">0.0042059</td>
+<td align="right">0.4179793</td>
 <td align="right">-0.6904010</td>
-<td align="right">-1.849326</td>
+<td align="right">-1.837308</td>
 </tr>
 </tbody>
 </table>
 <h3 id="lipid-species-structure-annotation">lipid species structure
 annotation</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LSEA works by annotating the provided lipid species based on their LIPIDMAPS-style name</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and sorts them into multiple lipid sets based on class, tail length, and double bonds</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>lipid_anno <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">annotate.lipid.species</span>(<span class="fu">rownames</span>(t_df[<span class="fu">order</span>(t_df<span class="sc">$</span>pvalue),]))</span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lipid_anno <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">annotate.lipid.species</span>(<span class="fu">rownames</span>(t_df[<span class="fu">order</span>(t_df<span class="sc">$</span>pvalue),]))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
