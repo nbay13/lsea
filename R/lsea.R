@@ -79,6 +79,8 @@ structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, p_thresh = 
 	temp$label <- temp$n
 	temp$label[temp$n < 2] <- "" 	
 	temp <- temp %>% tidyr::complete(Longest.Tail, Total.DBs, sign) %>% data.frame()
+	temp$Longest.Tail <- factor(temp$Longest.Tail)
+	temp$Total.DBs <- factor(temp$Total.DBs)
 	gg <- ggplot(temp %>% na.omit(), aes(x = Longest.Tail, y = Total.DBs, size = n, color = sign, group = sign)) + 
 	ggplot2::geom_point(position = position_dodge(width = 0.8)) +
 	ggplot2::geom_text(aes(label= label), position = position_dodge(width = 0.8), color = "black") +
