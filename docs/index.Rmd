@@ -27,7 +27,7 @@ data(labels)
 # note: this is not for normalized abundance data!!
 clr_data <- lsea::clr.transform(comp_data)
 ```
-## Differential composition analysis
+## Differential composition testing
 ```{r, warning = FALSE, message = FALSE}
 # to perform a paired t-test (samples must be ordered by pair)
 t_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
