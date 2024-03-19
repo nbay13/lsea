@@ -65,6 +65,6 @@ lipid_anno <- lsea::annotate.lipid.species(rownames(t_df[order(t_df$pvalue),]))
 ```
 
 ```{r, echo = FALSE}
-knitr::kable(head(lipid_anno, 15))
+knitr::kable(head(lipid_anno, 10))
 ```
 
