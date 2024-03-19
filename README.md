@@ -14,4 +14,5 @@ if(!require("devtools", quietly = TRUE))
 devtools::install_github("nbay13/lsea")
 ```
 ## Usage
-See [vignette](https://nbay13.github.io/lsea/)
+See vignette for a tutorial on differential composition testing and Lipid Structure Enrichment Analysis (LSEA)
+https://nbay13.github.io/lsea/
