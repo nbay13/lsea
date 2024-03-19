@@ -47,7 +47,7 @@ knitr::kable(head(w_df[order(w_df$pvalue),]))
 ```{r, warning = FALSE, message = FALSE}
 # we can use the t-statistic to rank lipid species and perform enrichment analysis using the GSEA algorithm
 # note: the returned Wilcoxon statistic is not directional
-res <- lsea::lsea(de_df, rnk_name = "stat")
+res <- lsea::lsea(t_df, rnk_name = "stat")
 ```
 ##### Top 5 positive results
 ```{r, echo = FALSE}
