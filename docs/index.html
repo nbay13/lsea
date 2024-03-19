@@ -614,8 +614,8 @@ data</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#transform composition data (features x samples) using centered log-ratio transformation</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># note: this is not for normalized abundance data!!</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>clr_data <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">clr.transform</span>(comp_data)</span></code></pre></div>
-<h2 id="differential-composition-analysis">Differential composition
-analysis</h2>
+<h2 id="differential-composition-testing">Differential composition
+testing</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to perform a paired t-test (samples must be ordered by pair)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>t_df <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">two.group.row.test</span>(clr_data, labels, <span class="at">test =</span> <span class="st">&quot;t&quot;</span>, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># to perform unpaired wilcox test</span></span>
@@ -783,42 +783,42 @@ ordered by p-value</h5>
 <tr class="odd">
 <td align="left">104</td>
 <td align="left">TG_UFA_12-16</td>
-<td align="right">0.0073786</td>
-<td align="right">0.5174089</td>
+<td align="right">0.0066863</td>
+<td align="right">0.4747296</td>
 <td align="right">0.4911824</td>
-<td align="right">1.706919</td>
+<td align="right">1.707532</td>
 </tr>
 <tr class="even">
 <td align="left">191</td>
 <td align="left">UFA_12-16</td>
-<td align="right">0.0073786</td>
-<td align="right">0.5174089</td>
+<td align="right">0.0066863</td>
+<td align="right">0.4747296</td>
 <td align="right">0.4911824</td>
-<td align="right">1.706919</td>
+<td align="right">1.707532</td>
 </tr>
 <tr class="odd">
 <td align="left">281</td>
 <td align="left">TG_UFA_16</td>
-<td align="right">0.0399285</td>
-<td align="right">0.9443726</td>
+<td align="right">0.0336901</td>
+<td align="right">0.8599112</td>
 <td align="right">0.5313508</td>
-<td align="right">1.558885</td>
+<td align="right">1.553871</td>
 </tr>
 <tr class="even">
 <td align="left">40</td>
 <td align="left">CE_SFA_22-26</td>
-<td align="right">0.0091093</td>
-<td align="right">0.5174089</td>
+<td align="right">0.0086069</td>
+<td align="right">0.4888711</td>
 <td align="right">0.9674523</td>
-<td align="right">1.473054</td>
+<td align="right">1.473453</td>
 </tr>
 <tr class="odd">
 <td align="left">230</td>
 <td align="left">PE.O_MUFA_18</td>
-<td align="right">0.0584468</td>
-<td align="right">0.9554083</td>
+<td align="right">0.0498587</td>
+<td align="right">0.8599112</td>
 <td align="right">0.8365140</td>
-<td align="right">1.440296</td>
+<td align="right">1.428350</td>
 </tr>
 </tbody>
 </table>
@@ -838,50 +838,50 @@ ordered by p-value</h5>
 <tr class="odd">
 <td align="left">153</td>
 <td align="left">FA_12-16</td>
-<td align="right">0.0391682</td>
-<td align="right">0.9443726</td>
+<td align="right">0.0385697</td>
+<td align="right">0.8599112</td>
 <td align="right">-0.7230966</td>
-<td align="right">-1.553085</td>
+<td align="right">-1.549150</td>
 </tr>
 <tr class="even">
 <td align="left">61</td>
 <td align="left">HexCER_MUFA_22-26</td>
-<td align="right">0.0262467</td>
-<td align="right">0.9443726</td>
+<td align="right">0.0257131</td>
+<td align="right">0.8599112</td>
 <td align="right">-0.7448246</td>
-<td align="right">-1.599753</td>
+<td align="right">-1.595700</td>
 </tr>
 <tr class="odd">
 <td align="left">157</td>
 <td align="left">HexCER_22-26</td>
-<td align="right">0.0262467</td>
-<td align="right">0.9443726</td>
+<td align="right">0.0257131</td>
+<td align="right">0.8599112</td>
 <td align="right">-0.7448246</td>
-<td align="right">-1.599753</td>
+<td align="right">-1.595700</td>
 </tr>
 <tr class="even">
 <td align="left">277</td>
 <td align="left">TG_SFA_18</td>
-<td align="right">0.0268939</td>
-<td align="right">0.9443726</td>
+<td align="right">0.0285542</td>
+<td align="right">0.8599112</td>
 <td align="right">-0.6808962</td>
-<td align="right">-1.600026</td>
+<td align="right">-1.604466</td>
 </tr>
 <tr class="odd">
 <td align="left">193</td>
 <td align="left">CE_PUFA_18</td>
-<td align="right">0.0037924</td>
-<td align="right">0.5174089</td>
+<td align="right">0.0033650</td>
+<td align="right">0.4747296</td>
 <td align="right">-0.9356382</td>
-<td align="right">-1.605770</td>
+<td align="right">-1.616434</td>
 </tr>
 <tr class="even">
 <td align="left">144</td>
 <td align="left">CE_17-20</td>
-<td align="right">0.0024233</td>
-<td align="right">0.5174089</td>
+<td align="right">0.0053774</td>
+<td align="right">0.4747296</td>
 <td align="right">-0.6904010</td>
-<td align="right">-1.858534</td>
+<td align="right">-1.849326</td>
 </tr>
 </tbody>
 </table>
