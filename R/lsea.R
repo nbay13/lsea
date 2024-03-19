@@ -53,7 +53,8 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	high_res3 <- split(anno_df$Species, paste(anno_df$Saturation, anno_df$Chain.new, sep = "_"))
 	high_res4 <- split(anno_df$Species, paste(anno_df$Class, anno_df$Saturation, anno_df$Longest.Tail, sep = "_"))
 	lipid_lists <- c(tail_lengths, saturations, classes, chains, high_res, high_res1, high_res2, high_res3, high_res4)
-	rnk <- setNames(de_tbl[[rnk_name]], rownames(plot_df))
+	if(rownames) rnk <- setNames(de_tbl[[rnk_name]], rownames(de_tbl))
+	else rnk <- setNames(de_tbl[[rnk_name]], de_tbl[[var_name]])
 	rnk[is.na(rnk)] <- 0
 	res <- fgsea::fgseaSimple(stats = rnk, pathways = lipid_lists, nperm = nperm, minSize = minSize) %>% arrange(NES) %>% data.frame()
 	return(res)

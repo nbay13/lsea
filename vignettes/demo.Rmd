@@ -13,11 +13,40 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-```{r setup}
+### Install dependencies and lsea package
+```{r setup, warning = FALSE, message = FALSE}
 if(!require("devtools", quietly = TRUE))
     install.packages("devtools")
 install.packages("compositions")
 devtools::install_github("nbay13/lsea")
 library(lsea)
 ```
+### load example data and perform clr transformation
+```{r, warning = FALSE}
+data(comp_data)
+data(labels)
+
+#transform composition data (features x samples) using centered log-ratio transformation
+clr_data <- clr.transform(comp_data)
+```
+### perform differential composition analysis on clr-transformed data
+```{r, warning = FALSE, message = FALSE}
+# to perform a paired t-test (samples must be ordered by pair)
+de_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
+# to perform unpaired wilcox test
+# wilcox test will throw warnings for every row with ties, so suppress those warnings
+w_df <- suppressWarnings(lsea::two.group.row.test(clr_data, labels, test = "w", paired = FALSE))
+```
+### inspect the results
+```{r}
+head(de_df)
+
+head(w_df)
+```
+### lipid structure enrichment analysis
+```{r, warning = FALSE, message = FALSE}
+# we can use the t-statistic to rank lipid species and perform GSEA-like enrichment analysis
+res <- lsea::lsea(de_df, rnk_name = "stat")
+head(res)
+```
+
