@@ -84,6 +84,7 @@ gg.colors <- function(n) {
   hcl(h = hues, l = 65, c = 100)[1:n]
 }
 
+#' @importFrom magrittr "%>%"
 #' @importFrom ggplot2 ggplot aes position_dodge
 #' @export structure.enrichment.plot
 structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, p_thresh = 0.05, color_pal = NULL, max_size = 4, facet_rows = 3){

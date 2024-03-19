@@ -16,6 +16,7 @@ Imports:
     dplyr,
     fgsea,
     ggplot2,
+    magrittr,
     tidyr
 Suggests: 
     knitr,
