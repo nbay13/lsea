@@ -14,6 +14,6 @@ if(!require("devtools", quietly = TRUE))
 devtools::install_github("nbay13/lsea")
 ```
 ## Usage
-See vignette for a tutorial using example data to perform differential composition testing and Lipid Structure Enrichment Analysis (LSEA)
+See vignette using example data to perform differential composition testing and LSEA
 
 https://nbay13.github.io/lsea/
