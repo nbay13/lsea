@@ -1,24 +1,28 @@
 A tutorial on Lipid Structure Enrichment Analysis (LSEA)
 ================
 
-## load package and example data and perform clr transformation
+### load package and example data
 
 ``` r
 library(lsea)
 
 data(comp_data)
 data(labels)
+```
 
+## CLR transformation
+
+``` r
 #transform composition data (features x samples) using centered log-ratio transformation
 # note: this is not for normalized abundance data!!
 clr_data <- lsea::clr.transform(comp_data)
 ```
 
-## perform differential composition analysis on clr-transformed data
+## Differential composition analysis
 
 ``` r
 # to perform a paired t-test (samples must be ordered by pair)
-de_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
+t_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
 # to perform unpaired wilcox test
 # note: wilcox test will throw warnings for every row with ties, so suppress those warnings
 w_df <- suppressWarnings(lsea::two.group.row.test(clr_data, labels, test = "w", paired = FALSE))
@@ -26,27 +30,33 @@ w_df <- suppressWarnings(lsea::two.group.row.test(clr_data, labels, test = "w", 
 
 ### inspect the results
 
-t-test results
+``` r
+# t-test results ordered by p-value
+knitr::kable(head(t_df[order(t_df$pvalue),]))
+```
 
-|         |       stat |      mean1 |      mean2 |         dm |    pvalue |      padj |
-|:--------|-----------:|-----------:|-----------:|-----------:|----------:|----------:|
-| CE 12:0 | -0.2614509 | -0.1935301 |  0.1935301 | -0.3870601 | 0.7958048 | 0.9892482 |
-| CE 14:0 |  1.3159110 |  0.9237276 | -0.9237276 |  1.8474552 | 0.1996890 | 0.9551987 |
-| CE 14:1 |  0.4184487 |  0.2633849 | -0.2633849 |  0.5267698 | 0.6790554 | 0.9892482 |
-| CE 15:0 | -0.9589883 | -0.5506678 |  0.5506678 | -1.1013357 | 0.3463982 | 0.9785673 |
-| CE 16:0 | -0.9461001 | -0.7103156 |  0.7103156 | -1.4206311 | 0.3528080 | 0.9785673 |
-| CE 16:1 |  0.7659404 |  0.4240928 | -0.4240928 |  0.8481855 | 0.4506099 | 0.9785673 |
+|                |      stat |     mean1 |     mean2 |        dm |    pvalue |      padj |
+|:---------------|----------:|----------:|----------:|----------:|----------:|----------:|
+| TG 56:4-FA20:3 |  4.334250 |  2.168452 | -2.168452 |  4.336905 | 0.0001947 | 0.1738581 |
+| TG 49:3-FA18:3 |  3.825307 |  2.280831 | -2.280831 |  4.561661 | 0.0007361 | 0.2324484 |
+| TG 54:5-FA16:0 | -3.639901 | -1.953318 |  1.953318 | -3.906636 | 0.0011869 | 0.2324484 |
+| FA 20:3        |  3.615850 |  1.678991 | -1.678991 |  3.357982 | 0.0012623 | 0.2324484 |
+| TG 52:6-FA20:5 |  3.603903 |  1.856168 | -1.856168 |  3.712336 | 0.0013015 | 0.2324484 |
+| PC 18:2_20:2   | -3.225378 | -1.399152 |  1.399152 | -2.798303 | 0.0033828 | 0.5034804 |
 
-Wilcoxon test results
+``` r
+# Wilcoxon test results ordered by p-value
+knitr::kable(head(w_df[order(w_df$pvalue),]))
+```
 
-|         |  stat |      mean1 |      mean2 |         dm |    pvalue |      padj |
-|:--------|------:|-----------:|-----------:|-----------:|----------:|----------:|
-| CE 12:0 | 385.5 | -0.1935301 |  0.1935301 | -0.3870601 | 0.7104152 | 0.9929020 |
-| CE 14:0 | 416.0 |  0.9237276 | -0.9237276 |  1.8474552 | 0.3686215 | 0.9857487 |
-| CE 14:1 | 345.0 |  0.2633849 | -0.2633849 |  0.5267698 | 0.7406416 | 0.9929020 |
-| CE 15:0 | 345.0 | -0.5506678 |  0.5506678 | -1.1013357 | 0.7368086 | 0.9929020 |
-| CE 16:0 | 246.0 | -0.7103156 |  0.7103156 | -1.4206311 | 0.0335855 | 0.7923619 |
-| CE 16:1 | 369.0 |  0.4240928 | -0.4240928 |  0.8481855 | 0.9439534 | 0.9929020 |
+|                |  stat |      mean1 |      mean2 |        dm |    pvalue |      padj |
+|:---------------|------:|-----------:|-----------:|----------:|----------:|----------:|
+| PC 16:1_18:1   | 624.0 |  1.6414554 | -1.6414554 |  3.282911 | 0.0000062 | 0.0055207 |
+| FA 16:0        | 139.5 | -1.5086985 |  1.5086985 | -3.017397 | 0.0000831 | 0.0266629 |
+| CE 18:1        | 140.0 | -1.6537323 |  1.6537323 | -3.307465 | 0.0000896 | 0.0266629 |
+| PE P-16:0/16:1 | 581.0 |  1.3571488 | -1.3571488 |  2.714298 | 0.0001750 | 0.0390769 |
+| TG 46:1-FA16:1 | 558.5 |  1.4270360 | -1.4270360 |  2.854072 | 0.0007628 | 0.1362407 |
+| PE 18:0_18:1   | 554.5 |  0.6344112 | -0.6344112 |  1.268822 | 0.0009795 | 0.1457757 |
 
 ## lipid structure enrichment analysis
 
@@ -60,29 +70,29 @@ Top 5 positive results
 
 |     | pathway      |      pval |      padj |        ES |      NES |
 |:----|:-------------|----------:|----------:|----------:|---------:|
-| 104 | TG_UFA_12-16 | 0.0061168 | 0.4342936 | 0.4911824 | 1.709831 |
-| 191 | UFA_12-16    | 0.0061168 | 0.4342936 | 0.4911824 | 1.709831 |
-| 281 | TG_UFA_16    | 0.0381238 | 0.8893568 | 0.5313508 | 1.559604 |
-| 40  | CE_SFA_22-26 | 0.0099840 | 0.5670927 | 0.9674523 | 1.467142 |
-| 230 | PE.O_MUFA_18 | 0.0571199 | 0.9594808 | 0.8365140 | 1.428722 |
+| 104 | TG_UFA_12-16 | 0.0084202 | 0.5481303 | 0.4911824 | 1.707807 |
+| 191 | UFA_12-16    | 0.0084202 | 0.5481303 | 0.4911824 | 1.707807 |
+| 281 | TG_UFA_16    | 0.0367009 | 0.8951155 | 0.5313508 | 1.557362 |
+| 40  | CE_SFA_22-26 | 0.0096502 | 0.5481303 | 0.9674523 | 1.479860 |
+| 230 | PE.O_MUFA_18 | 0.0540984 | 0.9336334 | 0.8365140 | 1.442940 |
 
 Top 5 negative results
 
 |     | pathway           |      pval |      padj |         ES |       NES |
 |:----|:------------------|----------:|----------:|-----------:|----------:|
-| 153 | FA_12-16          | 0.0354213 | 0.8893568 | -0.7230966 | -1.550059 |
-| 61  | HexCER_MUFA_22-26 | 0.0246148 | 0.8893568 | -0.7448246 | -1.596637 |
-| 157 | HexCER_22-26      | 0.0246148 | 0.8893568 | -0.7448246 | -1.596637 |
-| 277 | TG_SFA_18         | 0.0259688 | 0.8893568 | -0.6808962 | -1.605585 |
-| 193 | CE_PUFA_18        | 0.0051659 | 0.4342936 | -0.9356382 | -1.606246 |
-| 144 | CE_17-20          | 0.0038641 | 0.4342936 | -0.6904010 | -1.849383 |
+| 153 | FA_12-16          | 0.0374257 | 0.8951155 | -0.7230966 | -1.541114 |
+| 61  | HexCER_MUFA_22-26 | 0.0257426 | 0.8951155 | -0.7448246 | -1.587423 |
+| 157 | HexCER_22-26      | 0.0257426 | 0.8951155 | -0.7448246 | -1.587423 |
+| 277 | TG_SFA_18         | 0.0287253 | 0.8951155 | -0.6808962 | -1.599495 |
+| 193 | CE_PUFA_18        | 0.0042918 | 0.5481303 | -0.9356382 | -1.607803 |
+| 144 | CE_17-20          | 0.0033838 | 0.5481303 | -0.6904010 | -1.842860 |
 
 ### lipid species structure annotation
 
 ``` r
 # LSEA works by annotating the provided lipid species based on their LIPIDMAPS-style name
 # and sorts them into multiple lipid sets based on class, tail length, and double bonds
-lipid_anno <- lsea::annotate.lipid.species(rownames(de_df))
+lipid_anno <- lsea::annotate.lipid.species(rownames(t_df))
 ```
 
 | Species | Class | Category | Total.Carbons | Longest.Tail | Total.DBs | Saturation | Chain |

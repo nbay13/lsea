@@ -13,33 +13,36 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-## load package and example data and perform clr transformation
+### load package and example data
 ```{r, warning = FALSE}
 library(lsea)
 
 data(comp_data)
 data(labels)
-
+```
+## CLR transformation
+```{r}
 #transform composition data (features x samples) using centered log-ratio transformation
 # note: this is not for normalized abundance data!!
 clr_data <- lsea::clr.transform(comp_data)
 ```
-## perform differential composition analysis on clr-transformed data
+## Differential composition analysis
 ```{r, warning = FALSE, message = FALSE}
 # to perform a paired t-test (samples must be ordered by pair)
-de_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
+t_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
 # to perform unpaired wilcox test
 # note: wilcox test will throw warnings for every row with ties, so suppress those warnings
 w_df <- suppressWarnings(lsea::two.group.row.test(clr_data, labels, test = "w", paired = FALSE))
 ```
 ### inspect the results
-t-test results
-```{r, echo = FALSE}
-knitr::kable(head(de_df))
+```{r}
+# t-test results ordered by p-value
+knitr::kable(head(t_df[order(t_df$pvalue),]))
 ```
-Wilcoxon test results
-```{r, echo = FALSE}
-knitr::kable(head(w_df))
+
+```{r}
+# Wilcoxon test results ordered by p-value
+knitr::kable(head(w_df[order(w_df$pvalue),]))
 ```
 
 ## lipid structure enrichment analysis
@@ -60,7 +63,7 @@ knitr::kable(res[279:284,1:5])
 ```{r}
 # LSEA works by annotating the provided lipid species based on their LIPIDMAPS-style name
 # and sorts them into multiple lipid sets based on class, tail length, and double bonds
-lipid_anno <- lsea::annotate.lipid.species(rownames(de_df))
+lipid_anno <- lsea::annotate.lipid.species(rownames(t_df))
 ```
 
 ```{r, echo = FALSE}

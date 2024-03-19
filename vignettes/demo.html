@@ -603,25 +603,26 @@ padding-top: 0px;
 
 <h1 id="a-tutorial-on-lipid-structure-enrichment-analysis-lsea">A
 tutorial on Lipid Structure Enrichment Analysis (LSEA)</h1>
-<h2 id="load-package-and-example-data-and-perform-clr-transformation">load
-package and example data and perform clr transformation</h2>
+<h3 id="load-package-and-example-data">load package and example
+data</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lsea)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(comp_data)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(labels)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#transform composition data (features x samples) using centered log-ratio transformation</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># note: this is not for normalized abundance data!!</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>clr_data <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">clr.transform</span>(comp_data)</span></code></pre></div>
-<h2 id="perform-differential-composition-analysis-on-clr-transformed-data">perform
-differential composition analysis on clr-transformed data</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to perform a paired t-test (samples must be ordered by pair)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>de_df <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">two.group.row.test</span>(clr_data, labels, <span class="at">test =</span> <span class="st">&quot;t&quot;</span>, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># to perform unpaired wilcox test</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># note: wilcox test will throw warnings for every row with ties, so suppress those warnings</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>w_df <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(lsea<span class="sc">::</span><span class="fu">two.group.row.test</span>(clr_data, labels, <span class="at">test =</span> <span class="st">&quot;w&quot;</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(labels)</span></code></pre></div>
+<h2 id="clr-transformation">CLR transformation</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#transform composition data (features x samples) using centered log-ratio transformation</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># note: this is not for normalized abundance data!!</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>clr_data <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">clr.transform</span>(comp_data)</span></code></pre></div>
+<h2 id="differential-composition-analysis">Differential composition
+analysis</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to perform a paired t-test (samples must be ordered by pair)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>t_df <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">two.group.row.test</span>(clr_data, labels, <span class="at">test =</span> <span class="st">&quot;t&quot;</span>, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># to perform unpaired wilcox test</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># note: wilcox test will throw warnings for every row with ties, so suppress those warnings</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>w_df <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(lsea<span class="sc">::</span><span class="fu">two.group.row.test</span>(clr_data, labels, <span class="at">test =</span> <span class="st">&quot;w&quot;</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
 <h3 id="inspect-the-results">inspect the results</h3>
-<p>t-test results</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># t-test results ordered by p-value</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(t_df[<span class="fu">order</span>(t_df<span class="sc">$</span>pvalue),]))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -636,62 +637,63 @@ differential composition analysis on clr-transformed data</h2>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">CE 12:0</td>
-<td align="right">-0.2614509</td>
-<td align="right">-0.1935301</td>
-<td align="right">0.1935301</td>
-<td align="right">-0.3870601</td>
-<td align="right">0.7958048</td>
-<td align="right">0.9892482</td>
+<td align="left">TG 56:4-FA20:3</td>
+<td align="right">4.334250</td>
+<td align="right">2.168452</td>
+<td align="right">-2.168452</td>
+<td align="right">4.336905</td>
+<td align="right">0.0001947</td>
+<td align="right">0.1738581</td>
 </tr>
 <tr class="even">
-<td align="left">CE 14:0</td>
-<td align="right">1.3159110</td>
-<td align="right">0.9237276</td>
-<td align="right">-0.9237276</td>
-<td align="right">1.8474552</td>
-<td align="right">0.1996890</td>
-<td align="right">0.9551987</td>
+<td align="left">TG 49:3-FA18:3</td>
+<td align="right">3.825307</td>
+<td align="right">2.280831</td>
+<td align="right">-2.280831</td>
+<td align="right">4.561661</td>
+<td align="right">0.0007361</td>
+<td align="right">0.2324484</td>
 </tr>
 <tr class="odd">
-<td align="left">CE 14:1</td>
-<td align="right">0.4184487</td>
-<td align="right">0.2633849</td>
-<td align="right">-0.2633849</td>
-<td align="right">0.5267698</td>
-<td align="right">0.6790554</td>
-<td align="right">0.9892482</td>
+<td align="left">TG 54:5-FA16:0</td>
+<td align="right">-3.639901</td>
+<td align="right">-1.953318</td>
+<td align="right">1.953318</td>
+<td align="right">-3.906636</td>
+<td align="right">0.0011869</td>
+<td align="right">0.2324484</td>
 </tr>
 <tr class="even">
-<td align="left">CE 15:0</td>
-<td align="right">-0.9589883</td>
-<td align="right">-0.5506678</td>
-<td align="right">0.5506678</td>
-<td align="right">-1.1013357</td>
-<td align="right">0.3463982</td>
-<td align="right">0.9785673</td>
+<td align="left">FA 20:3</td>
+<td align="right">3.615850</td>
+<td align="right">1.678991</td>
+<td align="right">-1.678991</td>
+<td align="right">3.357982</td>
+<td align="right">0.0012623</td>
+<td align="right">0.2324484</td>
 </tr>
 <tr class="odd">
-<td align="left">CE 16:0</td>
-<td align="right">-0.9461001</td>
-<td align="right">-0.7103156</td>
-<td align="right">0.7103156</td>
-<td align="right">-1.4206311</td>
-<td align="right">0.3528080</td>
-<td align="right">0.9785673</td>
+<td align="left">TG 52:6-FA20:5</td>
+<td align="right">3.603903</td>
+<td align="right">1.856168</td>
+<td align="right">-1.856168</td>
+<td align="right">3.712336</td>
+<td align="right">0.0013015</td>
+<td align="right">0.2324484</td>
 </tr>
 <tr class="even">
-<td align="left">CE 16:1</td>
-<td align="right">0.7659404</td>
-<td align="right">0.4240928</td>
-<td align="right">-0.4240928</td>
-<td align="right">0.8481855</td>
-<td align="right">0.4506099</td>
-<td align="right">0.9785673</td>
+<td align="left">PC 18:2_20:2</td>
+<td align="right">-3.225378</td>
+<td align="right">-1.399152</td>
+<td align="right">1.399152</td>
+<td align="right">-2.798303</td>
+<td align="right">0.0033828</td>
+<td align="right">0.5034804</td>
 </tr>
 </tbody>
 </table>
-<p>Wilcoxon test results</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wilcoxon test results ordered by p-value</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(w_df[<span class="fu">order</span>(w_df<span class="sc">$</span>pvalue),]))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -706,66 +708,66 @@ differential composition analysis on clr-transformed data</h2>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">CE 12:0</td>
-<td align="right">385.5</td>
-<td align="right">-0.1935301</td>
-<td align="right">0.1935301</td>
-<td align="right">-0.3870601</td>
-<td align="right">0.7104152</td>
-<td align="right">0.9929020</td>
+<td align="left">PC 16:1_18:1</td>
+<td align="right">624.0</td>
+<td align="right">1.6414554</td>
+<td align="right">-1.6414554</td>
+<td align="right">3.282911</td>
+<td align="right">0.0000062</td>
+<td align="right">0.0055207</td>
 </tr>
 <tr class="even">
-<td align="left">CE 14:0</td>
-<td align="right">416.0</td>
-<td align="right">0.9237276</td>
-<td align="right">-0.9237276</td>
-<td align="right">1.8474552</td>
-<td align="right">0.3686215</td>
-<td align="right">0.9857487</td>
+<td align="left">FA 16:0</td>
+<td align="right">139.5</td>
+<td align="right">-1.5086985</td>
+<td align="right">1.5086985</td>
+<td align="right">-3.017397</td>
+<td align="right">0.0000831</td>
+<td align="right">0.0266629</td>
 </tr>
 <tr class="odd">
-<td align="left">CE 14:1</td>
-<td align="right">345.0</td>
-<td align="right">0.2633849</td>
-<td align="right">-0.2633849</td>
-<td align="right">0.5267698</td>
-<td align="right">0.7406416</td>
-<td align="right">0.9929020</td>
+<td align="left">CE 18:1</td>
+<td align="right">140.0</td>
+<td align="right">-1.6537323</td>
+<td align="right">1.6537323</td>
+<td align="right">-3.307465</td>
+<td align="right">0.0000896</td>
+<td align="right">0.0266629</td>
 </tr>
 <tr class="even">
-<td align="left">CE 15:0</td>
-<td align="right">345.0</td>
-<td align="right">-0.5506678</td>
-<td align="right">0.5506678</td>
-<td align="right">-1.1013357</td>
-<td align="right">0.7368086</td>
-<td align="right">0.9929020</td>
+<td align="left">PE P-16:0/16:1</td>
+<td align="right">581.0</td>
+<td align="right">1.3571488</td>
+<td align="right">-1.3571488</td>
+<td align="right">2.714298</td>
+<td align="right">0.0001750</td>
+<td align="right">0.0390769</td>
 </tr>
 <tr class="odd">
-<td align="left">CE 16:0</td>
-<td align="right">246.0</td>
-<td align="right">-0.7103156</td>
-<td align="right">0.7103156</td>
-<td align="right">-1.4206311</td>
-<td align="right">0.0335855</td>
-<td align="right">0.7923619</td>
+<td align="left">TG 46:1-FA16:1</td>
+<td align="right">558.5</td>
+<td align="right">1.4270360</td>
+<td align="right">-1.4270360</td>
+<td align="right">2.854072</td>
+<td align="right">0.0007628</td>
+<td align="right">0.1362407</td>
 </tr>
 <tr class="even">
-<td align="left">CE 16:1</td>
-<td align="right">369.0</td>
-<td align="right">0.4240928</td>
-<td align="right">-0.4240928</td>
-<td align="right">0.8481855</td>
-<td align="right">0.9439534</td>
-<td align="right">0.9929020</td>
+<td align="left">PE 18:0_18:1</td>
+<td align="right">554.5</td>
+<td align="right">0.6344112</td>
+<td align="right">-0.6344112</td>
+<td align="right">1.268822</td>
+<td align="right">0.0009795</td>
+<td align="right">0.1457757</td>
 </tr>
 </tbody>
 </table>
 <h2 id="lipid-structure-enrichment-analysis">lipid structure enrichment
 analysis</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can use the t-statistic to rank lipid species and perform enrichment analysis using the GSEA algorithm</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># note: the returned Wilcoxon statistic is not directional</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">lsea</span>(de_df, <span class="at">rnk_name =</span> <span class="st">&quot;stat&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can use the t-statistic to rank lipid species and perform enrichment analysis using the GSEA algorithm</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># note: the returned Wilcoxon statistic is not directional</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">lsea</span>(de_df, <span class="at">rnk_name =</span> <span class="st">&quot;stat&quot;</span>)</span></code></pre></div>
 <p>Top 5 positive results</p>
 <table>
 <thead>
@@ -782,42 +784,42 @@ analysis</h2>
 <tr class="odd">
 <td align="left">104</td>
 <td align="left">TG_UFA_12-16</td>
-<td align="right">0.0061168</td>
-<td align="right">0.4342936</td>
+<td align="right">0.0084202</td>
+<td align="right">0.5481303</td>
 <td align="right">0.4911824</td>
-<td align="right">1.709831</td>
+<td align="right">1.707807</td>
 </tr>
 <tr class="even">
 <td align="left">191</td>
 <td align="left">UFA_12-16</td>
-<td align="right">0.0061168</td>
-<td align="right">0.4342936</td>
+<td align="right">0.0084202</td>
+<td align="right">0.5481303</td>
 <td align="right">0.4911824</td>
-<td align="right">1.709831</td>
+<td align="right">1.707807</td>
 </tr>
 <tr class="odd">
 <td align="left">281</td>
 <td align="left">TG_UFA_16</td>
-<td align="right">0.0381238</td>
-<td align="right">0.8893568</td>
+<td align="right">0.0367009</td>
+<td align="right">0.8951155</td>
 <td align="right">0.5313508</td>
-<td align="right">1.559604</td>
+<td align="right">1.557362</td>
 </tr>
 <tr class="even">
 <td align="left">40</td>
 <td align="left">CE_SFA_22-26</td>
-<td align="right">0.0099840</td>
-<td align="right">0.5670927</td>
+<td align="right">0.0096502</td>
+<td align="right">0.5481303</td>
 <td align="right">0.9674523</td>
-<td align="right">1.467142</td>
+<td align="right">1.479860</td>
 </tr>
 <tr class="odd">
 <td align="left">230</td>
 <td align="left">PE.O_MUFA_18</td>
-<td align="right">0.0571199</td>
-<td align="right">0.9594808</td>
+<td align="right">0.0540984</td>
+<td align="right">0.9336334</td>
 <td align="right">0.8365140</td>
-<td align="right">1.428722</td>
+<td align="right">1.442940</td>
 </tr>
 </tbody>
 </table>
@@ -837,58 +839,58 @@ analysis</h2>
 <tr class="odd">
 <td align="left">153</td>
 <td align="left">FA_12-16</td>
-<td align="right">0.0354213</td>
-<td align="right">0.8893568</td>
+<td align="right">0.0374257</td>
+<td align="right">0.8951155</td>
 <td align="right">-0.7230966</td>
-<td align="right">-1.550059</td>
+<td align="right">-1.541114</td>
 </tr>
 <tr class="even">
 <td align="left">61</td>
 <td align="left">HexCER_MUFA_22-26</td>
-<td align="right">0.0246148</td>
-<td align="right">0.8893568</td>
+<td align="right">0.0257426</td>
+<td align="right">0.8951155</td>
 <td align="right">-0.7448246</td>
-<td align="right">-1.596637</td>
+<td align="right">-1.587423</td>
 </tr>
 <tr class="odd">
 <td align="left">157</td>
 <td align="left">HexCER_22-26</td>
-<td align="right">0.0246148</td>
-<td align="right">0.8893568</td>
+<td align="right">0.0257426</td>
+<td align="right">0.8951155</td>
 <td align="right">-0.7448246</td>
-<td align="right">-1.596637</td>
+<td align="right">-1.587423</td>
 </tr>
 <tr class="even">
 <td align="left">277</td>
 <td align="left">TG_SFA_18</td>
-<td align="right">0.0259688</td>
-<td align="right">0.8893568</td>
+<td align="right">0.0287253</td>
+<td align="right">0.8951155</td>
 <td align="right">-0.6808962</td>
-<td align="right">-1.605585</td>
+<td align="right">-1.599495</td>
 </tr>
 <tr class="odd">
 <td align="left">193</td>
 <td align="left">CE_PUFA_18</td>
-<td align="right">0.0051659</td>
-<td align="right">0.4342936</td>
+<td align="right">0.0042918</td>
+<td align="right">0.5481303</td>
 <td align="right">-0.9356382</td>
-<td align="right">-1.606246</td>
+<td align="right">-1.607803</td>
 </tr>
 <tr class="even">
 <td align="left">144</td>
 <td align="left">CE_17-20</td>
-<td align="right">0.0038641</td>
-<td align="right">0.4342936</td>
+<td align="right">0.0033838</td>
+<td align="right">0.5481303</td>
 <td align="right">-0.6904010</td>
-<td align="right">-1.849383</td>
+<td align="right">-1.842860</td>
 </tr>
 </tbody>
 </table>
 <h3 id="lipid-species-structure-annotation">lipid species structure
 annotation</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LSEA works by annotating the provided lipid species based on their LIPIDMAPS-style name</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and sorts them into multiple lipid sets based on class, tail length, and double bonds</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lipid_anno <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">annotate.lipid.species</span>(<span class="fu">rownames</span>(de_df))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LSEA works by annotating the provided lipid species based on their LIPIDMAPS-style name</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and sorts them into multiple lipid sets based on class, tail length, and double bonds</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>lipid_anno <span class="ot">&lt;-</span> lsea<span class="sc">::</span><span class="fu">annotate.lipid.species</span>(<span class="fu">rownames</span>(t_df))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
