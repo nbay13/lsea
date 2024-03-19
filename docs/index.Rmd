@@ -67,11 +67,12 @@ lipid_anno <- lsea::annotate.lipid.species(rownames(t_df[order(t_df$pvalue),]))
 knitr::kable(head(lipid_anno, 10))
 ```
 ### Visualizing differential lipid species enrichment
-```{r}
+```{r, fig.width=10,fig.height=7}
 # for the purposes of this example we will raise the adjusted p-value threshold
+# since there are not many significant differences with this simulated data
 lsea::structure.enrichment.plot(
   de_tbl = t_df, anno_tbl = lipid_anno, group_names = c("A", "B"),
-  p_thresh = 0.75, color_pal = c("dodgerblue", "firebrick")
+  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick")
 )
 ```
 
