@@ -71,7 +71,7 @@ gg.colors <- function(n) {
 #' @importFrom magrittr "%>%"
 #' @importFrom ggplot2 ggplot aes position_dodge
 #' @export structure.enrichment.plot
-structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, p_thresh = 0.05, color_pal = NULL, max_size = 4, facet_rows = 3){
+structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, p_thresh = 0.05, color_pal = NULL, size_range = c(1, 4), facet_rows = 3){
 	if(is.null(color_pal)) color_pal <- gg.colors(2)
 	merge_df <- data.frame(cbind(de_tbl, anno_tbl))
 	temp <- merge_df %>% dplyr::filter(padj < p_thresh) %>% dplyr::group_by(Class, Longest.Tail, Total.DBs, dm > 0) %>% dplyr::count() %>% data.frame()
@@ -87,7 +87,7 @@ structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, p_thresh = 
 	ggplot2::scale_color_manual(values = color_pal, limits = c(TRUE, FALSE), labels = group_names) +
 	ggplot2::facet_wrap(~ Class, axes = "all_x", nrow = facet_rows) +
 	ggplot2::theme(legend.position = "top") +
-	ggplot2::scale_size(range = c(1, max_size)) + 
+	ggplot2::scale_size(range = size_range) + 
 	ggplot2::labs(size = "# of lipid species", color = "Increase in")
 	return(gg)
 }
