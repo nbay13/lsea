@@ -74,7 +74,7 @@ gg.colors <- function(n) {
 structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, p_thresh = 0.05, color_pal = NULL, max_size = 4, facet_rows = 3){
 	if(is.null(color_pal)) color_pal <- gg.colors(2)
 	merge_df <- data.frame(cbind(de_tbl, anno_tbl))
-	temp <- plot_df %>% dplyr::filter(padj < p_thresh) %>% dplyr::group_by(Class, Longest.Tail, Total.DBs, dm > 0) %>% dplyr::count() %>% data.frame()
+	temp <- merge_df %>% dplyr::filter(padj < p_thresh) %>% dplyr::group_by(Class, Longest.Tail, Total.DBs, dm > 0) %>% dplyr::count() %>% data.frame()
 	colnames(temp)[4] <- "sign"
 	temp$label <- temp$n
 	temp$label[temp$n < 2] <- "" 	
