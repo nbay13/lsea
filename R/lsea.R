@@ -61,22 +61,6 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	return(res)
 }
 
-
-temp <- plot_df %>% filter(padj < 0.01 & Class %in% c("PE", "PC", "PE.P", "PE.O")) %>% group_by(Longest.Tail, Total.DBs, signed.log.p > 0) %>% count() %>% data.frame()
-colnames(temp)[3] <- "sign"
-temp$label <- temp$n
-temp$label[temp$n < 2] <- ""
-
-temp <- temp %>% tidyr::complete(Longest.Tail, Total.DBs, sign) %>% data.frame()
-
-gg <- ggplot(temp, aes(x = Longest.Tail, y = Total.DBs, size = n, color = sign, group = sign)) + 
-geom_point(position = position_dodge(width = 0.8)) +
-geom_text(aes(label= label), position = position_dodge(width = 0.8), color = "black") +
-theme_classic() +
-scale_color_manual(values = unname(sample_type_pal[c("PT", "GS")]), limits = c(FALSE, TRUE), labels = c("Bulk Patient", "GS"))
-
-ggsave("GBM lipidomics bulk PT vs GS DE GPL Tail Length - Saturation plot.png", gg, dpi = 1200, height = 3.5, width = 5.25)
-
 # from https://stackoverflow.com/questions/8197559/emulate-ggplot2-default-color-palette
 #' @export gg.colors
 gg.colors <- function(n) {
