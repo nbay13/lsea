@@ -1,6 +1,6 @@
 ---
 title: "A tutorial on Lipid Structure Enrichment Analysis (LSEA)"
-output: rmarkdown::html_vignette
+output: rmarkdown::github_document
 vignette: >
   %\VignetteIndexEntry{demo}
   %\VignetteEngine{knitr::rmarkdown}
@@ -13,13 +13,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-### Install dependencies and lsea package
-```{r setup, results='hide', warning = FALSE, message = FALSE}
-if(!require("devtools", quietly = TRUE))
-    install.packages("devtools")
-install.packages("compositions")
-devtools::install_github("nbay13/lsea")
-```
 ## load package and example data and perform clr transformation
 ```{r, warning = FALSE}
 library(lsea)
@@ -28,6 +21,7 @@ data(comp_data)
 data(labels)
 
 #transform composition data (features x samples) using centered log-ratio transformation
+# note: this is not for normalized abundance data!!
 clr_data <- lsea::clr.transform(comp_data)
 ```
 ## perform differential composition analysis on clr-transformed data
@@ -35,31 +29,37 @@ clr_data <- lsea::clr.transform(comp_data)
 # to perform a paired t-test (samples must be ordered by pair)
 de_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
 # to perform unpaired wilcox test
-# wilcox test will throw warnings for every row with ties, so suppress those warnings
+# note: wilcox test will throw warnings for every row with ties, so suppress those warnings
 w_df <- suppressWarnings(lsea::two.group.row.test(clr_data, labels, test = "w", paired = FALSE))
 ```
 ### inspect the results
+t-test results
 ```{r, echo = FALSE}
 knitr::kable(head(de_df))
-
+```
+Wilcoxon test results
+```{r, echo = FALSE}
 knitr::kable(head(w_df))
 ```
+
 ## lipid structure enrichment analysis
 ```{r, warning = FALSE, message = FALSE}
-# we can use the t-statistic to rank lipid species and perform GSEA-like enrichment analysis
+# we can use the t-statistic to rank lipid species and perform enrichment analysis using the GSEA algorithm
+# note: the returned Wilcoxon statistic is not directional
 res <- lsea::lsea(de_df, rnk_name = "stat")
 ```
+Top 5 positive results
 ```{r, echo = FALSE}
 knitr::kable(res[1:5,1:5])
-
+```
+Top 5 negative results
+```{r, echo = FALSE}
 knitr::kable(res[279:284,1:5])
 ```
-
-
 ### lipid species structure annotation
 ```{r}
-# under the hood, lsea is using another function to annotate lipid species based on their name and sorts them into multiple lipid sets
-# we can invoke the function 
+# LSEA works by annotating the provided lipid species based on their LIPIDMAPS-style name
+# and sorts them into multiple lipid sets based on class, tail length, and double bonds
 lipid_anno <- lsea::annotate.lipid.species(rownames(de_df))
 ```
 
