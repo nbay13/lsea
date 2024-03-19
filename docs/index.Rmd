@@ -68,12 +68,12 @@ knitr::kable(head(lipid_anno, 10))
 ```
 ### Visualizing differential lipid species enrichment
 ##### Plot the differential lipid species by longest tail length, number of double bonds, and class
-```{r, fig.width = 8.5,fig.height = 7, dpi = 1200}
+```{r, fig.width = 9,fig.height = 6.5, dpi = 1200}
 # for the purposes of this example we will raise the adjusted p-value threshold
 # since there are not many significant differences with this simulated data
 lsea::structure.enrichment.plot(
   de_tbl = t_df, anno_tbl = lipid_anno, group_names = c("A", "B"),
-  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick"), max_size = 3
+  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick"), size_range = c(0.25, 2.5)
 )
 ```
 
