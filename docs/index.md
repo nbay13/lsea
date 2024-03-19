@@ -63,22 +63,22 @@ res <- lsea::lsea(t_df, rnk_name = "stat")
 
 |     | pathway      |      pval |      padj |        ES |      NES |
 |:----|:-------------|----------:|----------:|----------:|---------:|
-| 104 | TG_UFA_12-16 | 0.0054011 | 0.3834767 | 0.4911824 | 1.709976 |
-| 191 | UFA_12-16    | 0.0054011 | 0.3834767 | 0.4911824 | 1.709976 |
-| 281 | TG_UFA_16    | 0.0330396 | 0.8569729 | 0.5313508 | 1.562876 |
-| 40  | CE_SFA_22-26 | 0.0074868 | 0.4252529 | 0.9674523 | 1.482890 |
-| 230 | PE.O_MUFA_18 | 0.0504016 | 0.8923222 | 0.8365140 | 1.440310 |
+| 104 | TG_UFA_12-16 | 0.0055162 | 0.3916470 | 0.4911824 | 1.713779 |
+| 191 | UFA_12-16    | 0.0055162 | 0.3916470 | 0.4911824 | 1.713779 |
+| 281 | TG_UFA_16    | 0.0374801 | 0.8870282 | 0.5313508 | 1.558163 |
+| 40  | CE_SFA_22-26 | 0.0086052 | 0.4887733 | 0.9674523 | 1.478754 |
+| 230 | PE.O_MUFA_18 | 0.0544407 | 0.9484943 | 0.8365140 | 1.440881 |
 
 ##### Top 5 negative results
 
 |     | pathway           |      pval |      padj |         ES |       NES |
 |:----|:------------------|----------:|----------:|-----------:|----------:|
-| 153 | FA_12-16          | 0.0383846 | 0.8569729 | -0.7230966 | -1.552882 |
-| 193 | CE_PUFA_18        | 0.0043772 | 0.3834767 | -0.9356382 | -1.596913 |
-| 277 | TG_SFA_18         | 0.0283830 | 0.8569729 | -0.6808962 | -1.598426 |
-| 61  | HexCER_MUFA_22-26 | 0.0253898 | 0.8569729 | -0.7448246 | -1.599544 |
-| 157 | HexCER_22-26      | 0.0253898 | 0.8569729 | -0.7448246 | -1.599544 |
-| 144 | CE_17-20          | 0.0037683 | 0.3834767 | -0.6904010 | -1.849274 |
+| 153 | FA_12-16          | 0.0349511 | 0.8870282 | -0.7230966 | -1.565332 |
+| 193 | CE_PUFA_18        | 0.0032187 | 0.3916470 | -0.9356382 | -1.605187 |
+| 277 | TG_SFA_18         | 0.0320306 | 0.8870282 | -0.6808962 | -1.610584 |
+| 61  | HexCER_MUFA_22-26 | 0.0237667 | 0.8870282 | -0.7448246 | -1.612368 |
+| 157 | HexCER_22-26      | 0.0237667 | 0.8870282 | -0.7448246 | -1.612368 |
+| 144 | CE_17-20          | 0.0022200 | 0.3916470 | -0.6904010 | -1.847004 |
 
 ### lipid species structure annotation
 
@@ -102,12 +102,14 @@ lipid_anno <- lsea::annotate.lipid.species(rownames(t_df[order(t_df$pvalue),]))
 
 ### Visualizing differential lipid species enrichment
 
+##### Plot the differential lipid species by longest tail length, number of double bonds, and class
+
 ``` r
 # for the purposes of this example we will raise the adjusted p-value threshold
 # since there are not many significant differences with this simulated data
 lsea::structure.enrichment.plot(
   de_tbl = t_df, anno_tbl = lipid_anno, group_names = c("A", "B"),
-  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick")
+  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick"), max_size = 3
 )
 ```
 
