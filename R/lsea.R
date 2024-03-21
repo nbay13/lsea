@@ -20,7 +20,7 @@ two.group.row.test <- function(data, labels, test = c("t", "w"), var_equal = FAL
 	df <- data.frame(matrix(nrow = nrow(data), ncol = 5))
 	colnames(df) <- c("stat", "mean1", "mean2", "dm", "pvalue")
 	rownames(df) <- rownames(data)
-	inds <- which(biorunr::row.vars(data) > 0)
+	inds <- which(apply(data, 1, var) > 0)
 	for(i in inds){
 		t_res <- eval(parse(text = ev))
 		mean1 <- mean(data[i, labels == levels(labels)[1]])
@@ -164,7 +164,6 @@ annotate.lipid.species <- function(input_names){
 		prnt <- paste(w.missing, missing, sep = ": ", collapse = "\n")
 		stop(paste("Unknown lipid classes...\n", prnt))
 	} 
-	
 	# pre-define data.frame and fill with entries using for loop
 	structure_anno <- data.frame(matrix(nrow = length(class_name), ncol = 5))
 	colnames(structure_anno) <- c("Class","Total.Carbons", "Longest.Tail", "Total.DBs", "Saturation")
