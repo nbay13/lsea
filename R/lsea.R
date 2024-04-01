@@ -56,7 +56,7 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	if(rownames) rnk <- setNames(de_tbl[[rnk_name]], rownames(de_tbl))
 	else rnk <- setNames(de_tbl[[rnk_name]], de_tbl[[var_name]])
 	rnk[is.na(rnk)] <- 0
-	res <- data.frame(fgsea::fgseaSimple(stats = rnk, pathways = lipid_lists, nperm = nperm, minSize = minSize))
+	res <- fgsea::fgseaSimple(stats = rnk, pathways = lipid_lists, nperm = nperm, minSize = minSize)
 	res <- res %>% dplyr::arrange(desc(NES))
 	new_edge <- apply(res, 1, function(x){
 		paste(unlist(x$leadingEdge), collapse = ",")
@@ -64,7 +64,7 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	if(reformat){
 		res$leadingEdge <- new_edge
 	}
-	return(res)
+	return(data.frame(res))
 }
 
 # from https://stackoverflow.com/questions/8197559/emulate-ggplot2-default-color-palette
