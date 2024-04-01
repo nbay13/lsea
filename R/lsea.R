@@ -32,7 +32,7 @@ two.group.row.test <- function(data, labels, test = c("t", "w"), var_equal = FAL
 }
 
 #' @export lsea
-lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 10000, minSize = 2){
+lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 10000, minSize = 2, reformat = TRUE){
 	if(rownames) anno_df <- annotate.lipid.species(rownames(de_tbl))
 	else if(!rownames & is.null(var_name)) message("Error: Provide column name of lipid species if not using rownames")
 	else anno_df <- annotate.lipid.species(de_tbl[[var_name]])
@@ -58,6 +58,12 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	rnk[is.na(rnk)] <- 0
 	res <- data.frame(fgsea::fgseaSimple(stats = rnk, pathways = lipid_lists, nperm = nperm, minSize = minSize))
 	res <- res[order(res$NES, decreasing = TRUE),]
+	new_edge <- apply(res, 1, function(x){
+		paste(unlist(x$leadingEdge), collapse = ",")
+	})
+	if(reformat){
+		res$leadingEdge <- new_edge
+	}
 	return(res)
 }
 
@@ -71,7 +77,7 @@ gg.colors <- function(n) {
 #' @importFrom magrittr "%>%"
 #' @importFrom ggplot2 ggplot aes position_dodge
 #' @export structure.enrichment.plot
-structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, p_thresh = 0.05, color_pal = NULL, size_range = c(1, 4), facet_rows = 3){
+structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, class = NULL, p_thresh = 0.05, color_pal = NULL, size_range = c(1, 4), facet_rows = 3){
 	if(is.null(color_pal)) color_pal <- gg.colors(2)
 	merge_df <- data.frame(cbind(de_tbl, anno_tbl))
 	temp <- merge_df %>% dplyr::filter(padj < p_thresh) %>% dplyr::group_by(Class, Longest.Tail, Total.DBs, dm > 0) %>% dplyr::count() %>% data.frame()
@@ -80,15 +86,26 @@ structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, p_thresh = 
 	temp$label[temp$n < 2] <- ""
 	temp <- temp %>% tidyr::complete(Longest.Tail, Total.DBs, sign) %>% data.frame()
 	temp$Longest.Tail <- factor(temp$Longest.Tail)
-	gg <- ggplot(temp %>% na.omit(), aes(x = Longest.Tail, y = Total.DBs, size = n, color = sign, group = sign)) + 
-	ggplot2::geom_point(position = position_dodge(width = 0.8)) +
-	ggplot2::geom_text(aes(label= label), position = position_dodge(width = 0.8), color = "black") +
-	ggplot2::theme_classic() +
-	ggplot2::scale_color_manual(values = color_pal, limits = c(TRUE, FALSE), labels = group_names) +
-	ggplot2::facet_wrap(~ Class, axes = "all_x", nrow = facet_rows) +
-	ggplot2::theme(legend.position = "top") +
-	ggplot2::scale_size(range = size_range) + 
-	ggplot2::labs(size = "# of lipid species", color = "Increase in")
+	if(is.null(class)){
+		gg <- ggplot(temp %>% na.omit(), aes(x = Longest.Tail, y = Total.DBs, size = n, color = sign, group = sign)) + 
+		ggplot2::geom_point(position = position_dodge(width = 0.8)) +
+		ggplot2::geom_text(aes(label= label), position = position_dodge(width = 0.8), color = "black") +
+		ggplot2::theme_classic() +
+		ggplot2::scale_color_manual(values = color_pal, limits = c(TRUE, FALSE), labels = group_names) +
+		ggplot2::facet_wrap(~ Class, axes = "all_x", nrow = facet_rows) +
+		ggplot2::theme(legend.position = "top") +
+		ggplot2::scale_size(range = size_range) + 
+		ggplot2::labs(size = "# of lipid species", color = "Increase in")		
+	} else {
+		gg <- ggplot(temp %>% na.omit() %>% filter(Class == class), aes(x = Longest.Tail, y = Total.DBs, size = n, color = sign, group = sign)) + 
+		ggplot2::geom_point(position = position_dodge(width = 0.8)) +
+		ggplot2::geom_text(aes(label= label), position = position_dodge(width = 0.8), color = "black") +
+		ggplot2::theme_classic() +
+		ggplot2::scale_color_manual(values = color_pal, limits = c(TRUE, FALSE), labels = group_names) +
+		ggplot2::theme(legend.position = "top") +
+		ggplot2::scale_size(range = size_range) + 
+		ggplot2::labs(size = "# of lipid species", color = "Increase in")
+	}
 	return(gg)
 }
 
@@ -234,8 +251,8 @@ annotate.lipid.species <- function(input_names){
 			}
 		}
 	}
-	#rownames(structure_anno) <- lipid_names
-	structure_anno$Species <- input_names
+	rownames(structure_anno) <- input_names
+	structure_anno$Species <- lipid_names
 	structure_anno[,2:4] <- apply(structure_anno[,2:4], 2, as.numeric)
 	structure_anno$Category <- get.lipid.category(structure_anno$Class)
 	structure_anno$Chain <- get.chain.group(structure_anno$Longest.Tail)
