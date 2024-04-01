@@ -32,9 +32,9 @@ two.group.row.test <- function(data, labels, test = c("t", "w"), var_equal = FAL
 }
 
 #' @export lsea
-lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 10000, minSize = 2, reformat = TRUE){
+lsea <- function(de_tbl, rnk_name, var_name = "Species", rownames = TRUE, nperm = 10000, minSize = 2, reformat = TRUE){
 	if(rownames) anno_df <- annotate.lipid.species(rownames(de_tbl))
-	else if(!rownames & is.null(var_name)) message("Error: Provide column name of lipid species if not using rownames")
+	else if(!rownames & !(var_name %in% colnames(de_tbl))) message("Error: Provide valid column name of lipid species names")
 	else anno_df <- annotate.lipid.species(de_tbl[[var_name]])
 
 	anno_df$Chain.new <- anno_df$Chain
@@ -53,8 +53,7 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	high_res3 <- split(anno_df$Species, paste(anno_df$Saturation, anno_df$Chain.new, sep = "_"))
 	high_res4 <- split(anno_df$Species, paste(anno_df$Class, anno_df$Saturation, anno_df$Longest.Tail, sep = "_"))
 	lipid_lists <- c(tail_lengths, saturations, classes, chains, high_res, high_res1, high_res2, high_res3, high_res4)
-	if(rownames) rnk <- setNames(de_tbl[[rnk_name]], rownames(de_tbl))
-	else rnk <- setNames(de_tbl[[rnk_name]], de_tbl[[var_name]])
+	rnk <- setNames(de_tbl[[rnk_name]], anno_df$Species)
 	rnk[is.na(rnk)] <- 0
 	res <- fgsea::fgseaSimple(stats = rnk, pathways = lipid_lists, nperm = nperm, minSize = minSize)
 	res <- res %>% dplyr::arrange(desc(NES))
