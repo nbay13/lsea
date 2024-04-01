@@ -57,7 +57,7 @@ lsea <- function(de_tbl, rnk_name, var_name = NULL, rownames = TRUE, nperm = 100
 	else rnk <- setNames(de_tbl[[rnk_name]], de_tbl[[var_name]])
 	rnk[is.na(rnk)] <- 0
 	res <- data.frame(fgsea::fgseaSimple(stats = rnk, pathways = lipid_lists, nperm = nperm, minSize = minSize))
-	res <- res[order(res$NES, decreasing = TRUE),]
+	res <- res %>% dplyr::arrange(desc(NES))
 	new_edge <- apply(res, 1, function(x){
 		paste(unlist(x$leadingEdge), collapse = ",")
 	})
