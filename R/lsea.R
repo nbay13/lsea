@@ -78,7 +78,7 @@ gg.colors <- function(n) {
 #' @export structure.enrichment.plot
 structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, class = NULL, p_thresh = 0.05, color_pal = NULL, size_range = c(1, 4), facet_rows = 3){
 	if(is.null(color_pal)) color_pal <- gg.colors(2)
-	merge_df <- data.frame(cbind(de_tbl, anno_tbl))
+	merge_df <- data.frame(cbind(de_tbl, anno_tbl[rownames(de_tbl),]))
 	temp <- merge_df %>% dplyr::filter(padj < p_thresh) %>% dplyr::group_by(Class, Longest.Tail, Total.DBs, dm > 0) %>% dplyr::count() %>% data.frame()
 	colnames(temp)[4] <- "sign"
 	temp$label <- temp$n
@@ -96,13 +96,14 @@ structure.enrichment.plot <- function(de_tbl, anno_tbl, group_names, class = NUL
 		ggplot2::scale_size(range = size_range) + 
 		ggplot2::labs(size = "# of lipid species", color = "Increase in")		
 	} else {
-		gg <- ggplot(temp %>% na.omit() %>% filter(Class == class), aes(x = Longest.Tail, y = Total.DBs, size = n, color = sign, group = sign)) + 
+		gg <- ggplot(temp %>% dplyr::filter(Class == class) %>% na.omit(), aes(x = Longest.Tail, y = Total.DBs, size = n, color = sign, group = sign)) + 
 		ggplot2::geom_point(position = position_dodge(width = 0.8)) +
 		ggplot2::geom_text(aes(label= label), position = position_dodge(width = 0.8), color = "black") +
 		ggplot2::theme_classic() +
 		ggplot2::scale_color_manual(values = color_pal, limits = c(TRUE, FALSE), labels = group_names) +
 		ggplot2::theme(legend.position = "top") +
 		ggplot2::scale_size(range = size_range) + 
+		ggplot2::facet_wrap(~ Class) +
 		ggplot2::labs(size = "# of lipid species", color = "Increase in")
 	}
 	return(gg)
