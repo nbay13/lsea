@@ -56,49 +56,761 @@ w_df <- suppressWarnings(lsea::two.group.row.test(clr_data, labels, test = "w", 
 ``` r
 # we can use the t-statistic to rank lipid species and perform enrichment analysis using the GSEA algorithm
 # note: the returned Wilcoxon statistic is not directional
-res <- lsea::lsea(t_df, rnk_name = "stat")
+res <- lsea(t_df, rnk_name = "stat")
 ```
 
 ##### Top 5 positive results
 
-|     | pathway      |      pval |      padj |        ES |      NES |
-|:----|:-------------|----------:|----------:|----------:|---------:|
-| 104 | TG_UFA_12-16 | 0.0080455 | 0.4569859 | 0.4911824 | 1.719124 |
-| 191 | UFA_12-16    | 0.0080455 | 0.4569859 | 0.4911824 | 1.719124 |
-| 281 | TG_UFA_16    | 0.0362189 | 0.9331110 | 0.5313508 | 1.561904 |
-| 40  | CE_SFA_22-26 | 0.0064699 | 0.4569859 | 0.9674523 | 1.487857 |
-| 230 | PE.O_MUFA_18 | 0.0555556 | 0.9665670 | 0.8365140 | 1.443756 |
+<table class=" lightable-material lightable-striped" style="color: black; font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+pathway
+</th>
+<th style="text-align:right;">
+pval
+</th>
+<th style="text-align:right;">
+padj
+</th>
+<th style="text-align:right;">
+ES
+</th>
+<th style="text-align:right;">
+NES
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+TG_UFA_12-16
+</td>
+<td style="text-align:right;">
+0.0063291
+</td>
+<td style="text-align:right;">
+0.4493671
+</td>
+<td style="text-align:right;">
+0.4911824
+</td>
+<td style="text-align:right;">
+1.712751
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+UFA_12-16
+</td>
+<td style="text-align:right;">
+0.0063291
+</td>
+<td style="text-align:right;">
+0.4493671
+</td>
+<td style="text-align:right;">
+0.4911824
+</td>
+<td style="text-align:right;">
+1.712751
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+TG_UFA_16
+</td>
+<td style="text-align:right;">
+0.0353525
+</td>
+<td style="text-align:right;">
+0.8476057
+</td>
+<td style="text-align:right;">
+0.5313508
+</td>
+<td style="text-align:right;">
+1.571774
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+CE_SFA_22-26
+</td>
+<td style="text-align:right;">
+0.0096911
+</td>
+<td style="text-align:right;">
+0.5504543
+</td>
+<td style="text-align:right;">
+0.9674523
+</td>
+<td style="text-align:right;">
+1.477937
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+PE.O_MUFA_18
+</td>
+<td style="text-align:right;">
+0.0577428
+</td>
+<td style="text-align:right;">
+0.9608010
+</td>
+<td style="text-align:right;">
+0.8365140
+</td>
+<td style="text-align:right;">
+1.432899
+</td>
+</tr>
+</tbody>
+</table>
 
 ##### Top 5 negative results
 
-|     | pathway           |      pval |      padj |         ES |       NES |
-|:----|:------------------|----------:|----------:|-----------:|----------:|
-| 153 | FA_12-16          | 0.0390349 | 0.9331110 | -0.7230966 | -1.553109 |
-| 277 | TG_SFA_18         | 0.0324536 | 0.9331110 | -0.6808962 | -1.597580 |
-| 61  | HexCER_MUFA_22-26 | 0.0264810 | 0.9331110 | -0.7448246 | -1.599778 |
-| 157 | HexCER_22-26      | 0.0264810 | 0.9331110 | -0.7448246 | -1.599778 |
-| 193 | CE_PUFA_18        | 0.0058928 | 0.4569859 | -0.9356382 | -1.606162 |
-| 144 | CE_17-20          | 0.0030108 | 0.4569859 | -0.6904010 | -1.836800 |
+<table class=" lightable-material lightable-striped" style="color: black; font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+pathway
+</th>
+<th style="text-align:right;">
+pval
+</th>
+<th style="text-align:right;">
+padj
+</th>
+<th style="text-align:right;">
+ES
+</th>
+<th style="text-align:right;">
+NES
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+279
+</td>
+<td style="text-align:left;">
+FA_12-16
+</td>
+<td style="text-align:right;">
+0.0358143
+</td>
+<td style="text-align:right;">
+0.8476057
+</td>
+<td style="text-align:right;">
+-0.7230966
+</td>
+<td style="text-align:right;">
+-1.552061
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+280
+</td>
+<td style="text-align:left;">
+HexCER_MUFA_22-26
+</td>
+<td style="text-align:right;">
+0.0246098
+</td>
+<td style="text-align:right;">
+0.8476057
+</td>
+<td style="text-align:right;">
+-0.7448246
+</td>
+<td style="text-align:right;">
+-1.598698
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+281
+</td>
+<td style="text-align:left;">
+HexCER_22-26
+</td>
+<td style="text-align:right;">
+0.0246098
+</td>
+<td style="text-align:right;">
+0.8476057
+</td>
+<td style="text-align:right;">
+-0.7448246
+</td>
+<td style="text-align:right;">
+-1.598698
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+282
+</td>
+<td style="text-align:left;">
+TG_SFA_18
+</td>
+<td style="text-align:right;">
+0.0297465
+</td>
+<td style="text-align:right;">
+0.8476057
+</td>
+<td style="text-align:right;">
+-0.6808962
+</td>
+<td style="text-align:right;">
+-1.599884
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+283
+</td>
+<td style="text-align:left;">
+CE_PUFA_18
+</td>
+<td style="text-align:right;">
+0.0049495
+</td>
+<td style="text-align:right;">
+0.4493671
+</td>
+<td style="text-align:right;">
+-0.9356382
+</td>
+<td style="text-align:right;">
+-1.604216
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+284
+</td>
+<td style="text-align:left;">
+CE_17-20
+</td>
+<td style="text-align:right;">
+0.0044301
+</td>
+<td style="text-align:right;">
+0.4493671
+</td>
+<td style="text-align:right;">
+-0.6904010
+</td>
+<td style="text-align:right;">
+-1.844910
+</td>
+</tr>
+</tbody>
+</table>
 
-### lipid species structure annotation
+### Lipid species structure annotation
 
 ``` r
 # LSEA works by annotating the provided lipid species based on their LIPIDMAPS-style name
-lipid_anno <- lsea::annotate.lipid.species(rownames(t_df[order(t_df$pvalue),]))
+lipid_anno <- lsea::annotate.lipid.species(rownames(t_df))
 ```
 
-| Species        | Class | Category            | Total.Carbons | Longest.Tail | Total.DBs | Saturation | Chain |
-|:---------------|:------|:--------------------|--------------:|-------------:|----------:|:-----------|:------|
-| TG 56:4-FA20:3 | TG    | Glycerolipid        |            56 |           20 |         4 | PUFA       | LCFA  |
-| TG 49:3-FA18:3 | TG    | Glycerolipid        |            49 |           18 |         3 | PUFA       | LCFA  |
-| TG 54:5-FA16:0 | TG    | Glycerolipid        |            54 |           16 |         5 | PUFA       | LCFA  |
-| FA 20:3        | FA    | Fatty.Acyl          |            20 |           20 |         3 | PUFA       | LCFA  |
-| TG 52:6-FA20:5 | TG    | Glycerolipid        |            52 |           20 |         6 | PUFA       | LCFA  |
-| PC 18:2_20:2   | PC    | Glycerophospholipid |            38 |           20 |         4 | PUFA       | LCFA  |
-| TG 52:4-FA18:2 | TG    | Glycerolipid        |            52 |           18 |         4 | PUFA       | LCFA  |
-| CE 17:0        | CE    | Sterol              |            17 |           17 |         0 | SFA        | LCFA  |
-| PE P-16:0/16:1 | PE.P  | Ether               |            32 |           16 |         1 | MUFA       | LCFA  |
-| CE 18:1        | CE    | Sterol              |            18 |           18 |         1 | MUFA       | LCFA  |
+<table class=" lightable-material lightable-striped" style="color: black; font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:left;">
+Class
+</th>
+<th style="text-align:left;">
+Category
+</th>
+<th style="text-align:right;">
+Total.Carbons
+</th>
+<th style="text-align:right;">
+Longest.Tail
+</th>
+<th style="text-align:right;">
+Total.DBs
+</th>
+<th style="text-align:left;">
+Saturation
+</th>
+<th style="text-align:left;">
+Chain
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+TG 56:4-FA20:3
+</td>
+<td style="text-align:left;">
+TG.56.4.FA20.3
+</td>
+<td style="text-align:left;">
+TG
+</td>
+<td style="text-align:left;">
+Glycerolipid
+</td>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TG 49:3-FA18:3
+</td>
+<td style="text-align:left;">
+TG.49.3.FA18.3
+</td>
+<td style="text-align:left;">
+TG
+</td>
+<td style="text-align:left;">
+Glycerolipid
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TG 54:5-FA16:0
+</td>
+<td style="text-align:left;">
+TG.54.5.FA16.0
+</td>
+<td style="text-align:left;">
+TG
+</td>
+<td style="text-align:left;">
+Glycerolipid
+</td>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FA 20:3
+</td>
+<td style="text-align:left;">
+FA.20.3
+</td>
+<td style="text-align:left;">
+FA
+</td>
+<td style="text-align:left;">
+Fatty.Acyl
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TG 52:6-FA20:5
+</td>
+<td style="text-align:left;">
+TG.52.6.FA20.5
+</td>
+<td style="text-align:left;">
+TG
+</td>
+<td style="text-align:left;">
+Glycerolipid
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PC 18:2_20:2
+</td>
+<td style="text-align:left;">
+PC.18.2.20.2
+</td>
+<td style="text-align:left;">
+PC
+</td>
+<td style="text-align:left;">
+Glycerophospholipid
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TG 52:4-FA18:2
+</td>
+<td style="text-align:left;">
+TG.52.4.FA18.2
+</td>
+<td style="text-align:left;">
+TG
+</td>
+<td style="text-align:left;">
+Glycerolipid
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CE 17:0
+</td>
+<td style="text-align:left;">
+CE.17.0
+</td>
+<td style="text-align:left;">
+CE
+</td>
+<td style="text-align:left;">
+Sterol
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+SFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PE P-16:0/16:1
+</td>
+<td style="text-align:left;">
+PE.P.16.0.16.1
+</td>
+<td style="text-align:left;">
+PE.P
+</td>
+<td style="text-align:left;">
+Ether
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+MUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CE 18:1
+</td>
+<td style="text-align:left;">
+CE.18.1
+</td>
+<td style="text-align:left;">
+CE
+</td>
+<td style="text-align:left;">
+Sterol
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+MUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TG 56:6-FA22:4
+</td>
+<td style="text-align:left;">
+TG.56.6.FA22.4
+</td>
+<td style="text-align:left;">
+TG
+</td>
+<td style="text-align:left;">
+Glycerolipid
+</td>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+VLCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CE 18:4
+</td>
+<td style="text-align:left;">
+CE.18.4
+</td>
+<td style="text-align:left;">
+CE
+</td>
+<td style="text-align:left;">
+Sterol
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TG 49:2-FA17:0
+</td>
+<td style="text-align:left;">
+TG.49.2.FA17.0
+</td>
+<td style="text-align:left;">
+TG
+</td>
+<td style="text-align:left;">
+Glycerolipid
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+UFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FA 16:1
+</td>
+<td style="text-align:left;">
+FA.16.1
+</td>
+<td style="text-align:left;">
+FA
+</td>
+<td style="text-align:left;">
+Fatty.Acyl
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+MUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TG 58:9-FA18:1
+</td>
+<td style="text-align:left;">
+TG.58.9.FA18.1
+</td>
+<td style="text-align:left;">
+TG
+</td>
+<td style="text-align:left;">
+Glycerolipid
+</td>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+PUFA
+</td>
+<td style="text-align:left;">
+LCFA
+</td>
+</tr>
+</tbody>
+</table>
 
 ### Visualizing differential lipid species enrichment
 
@@ -109,8 +821,18 @@ lipid_anno <- lsea::annotate.lipid.species(rownames(t_df[order(t_df$pvalue),]))
 # since there are not many significant differences with this simulated data
 lsea::structure.enrichment.plot(
   de_tbl = t_df, anno_tbl = lipid_anno, group_names = c("A", "B"),
-  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick"), size_range = c(0.25, 2.5)
+  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick"), size_range = c(0.25, 2.5),
 )
 ```
 
 ![](index_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+``` r
+# or specify a Lipid Class
+lsea::structure.enrichment.plot(
+  de_tbl = t_df, anno_tbl = lipid_anno, group_names = c("A", "B"),
+  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick"), size_range = c(0.25, 2.5), class = "TG"
+)
+```
+
+![](index_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->

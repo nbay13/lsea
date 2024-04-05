@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{demo}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+always_allow_html: yes
 ---
 
 ```{r, include = FALSE}
@@ -47,24 +48,25 @@ knitr::kable(head(w_df[order(w_df$pvalue),]))
 ```{r, warning = FALSE, message = FALSE}
 # we can use the t-statistic to rank lipid species and perform enrichment analysis using the GSEA algorithm
 # note: the returned Wilcoxon statistic is not directional
-res <- lsea::lsea(t_df, rnk_name = "stat")
+res <- lsea(t_df, rnk_name = "stat")
 ```
 ##### Top 5 positive results
-```{r, echo = FALSE}
-knitr::kable(res[1:5,1:5])
+```{r, echo = FALSE, warning = FALSE}
+library(magrittr)
+knitr::kable(res[1:5,1:5], row.names = TRUE) %>% kableExtra::kable_material(c("striped"))
 ```
 ##### Top 5 negative results
 ```{r, echo = FALSE}
-knitr::kable(res[279:284,1:5])
+knitr::kable(res[279:284,1:5], row.names = TRUE) %>% kableExtra::kable_material(c("striped"))
 ```
-### lipid species structure annotation
+### Lipid species structure annotation
 ```{r}
 # LSEA works by annotating the provided lipid species based on their LIPIDMAPS-style name
-lipid_anno <- lsea::annotate.lipid.species(rownames(t_df[order(t_df$pvalue),]))
+lipid_anno <- lsea::annotate.lipid.species(rownames(t_df))
 ```
 
 ```{r, echo = FALSE}
-knitr::kable(head(lipid_anno, 10))
+knitr::kable(head(lipid_anno[order(t_df$pvalue),], 15)) %>% kableExtra::kable_material(c("striped"))
 ```
 ### Visualizing differential lipid species enrichment
 ##### Plot the differential lipid species by longest tail length, number of double bonds, and class
@@ -73,7 +75,14 @@ knitr::kable(head(lipid_anno, 10))
 # since there are not many significant differences with this simulated data
 lsea::structure.enrichment.plot(
   de_tbl = t_df, anno_tbl = lipid_anno, group_names = c("A", "B"),
-  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick"), size_range = c(0.25, 2.5)
+  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick"), size_range = c(0.25, 2.5),
+)
+```
+```{r, fig.width = 9,fig.height = 6.5, dpi = 1200}
+# or specify a Lipid Class
+lsea::structure.enrichment.plot(
+  de_tbl = t_df, anno_tbl = lipid_anno, group_names = c("A", "B"),
+  p_thresh = 0.96, color_pal = c("dodgerblue", "firebrick"), size_range = c(0.25, 2.5), class = "TG"
 )
 ```
 
