@@ -92,16 +92,16 @@ NES
 TG_UFA_12-16
 </td>
 <td style="text-align:right;">
-0.0063291
+0.0062943
 </td>
 <td style="text-align:right;">
-0.4493671
+0.4303888
 </td>
 <td style="text-align:right;">
 0.4911824
 </td>
 <td style="text-align:right;">
-1.712751
+1.711251
 </td>
 </tr>
 <tr>
@@ -112,16 +112,16 @@ TG_UFA_12-16
 UFA_12-16
 </td>
 <td style="text-align:right;">
-0.0063291
+0.0062943
 </td>
 <td style="text-align:right;">
-0.4493671
+0.4303888
 </td>
 <td style="text-align:right;">
 0.4911824
 </td>
 <td style="text-align:right;">
-1.712751
+1.711251
 </td>
 </tr>
 <tr>
@@ -132,16 +132,16 @@ UFA_12-16
 TG_UFA_16
 </td>
 <td style="text-align:right;">
-0.0353525
+0.0329169
 </td>
 <td style="text-align:right;">
-0.8476057
+0.8365313
 </td>
 <td style="text-align:right;">
 0.5313508
 </td>
 <td style="text-align:right;">
-1.571774
+1.567926
 </td>
 </tr>
 <tr>
@@ -152,16 +152,16 @@ TG_UFA_16
 CE_SFA_22-26
 </td>
 <td style="text-align:right;">
-0.0096911
+0.0075173
 </td>
 <td style="text-align:right;">
-0.5504543
+0.4303888
 </td>
 <td style="text-align:right;">
 0.9674523
 </td>
 <td style="text-align:right;">
-1.477937
+1.480016
 </td>
 </tr>
 <tr>
@@ -172,16 +172,16 @@ CE_SFA_22-26
 PE.O_MUFA_18
 </td>
 <td style="text-align:right;">
-0.0577428
+0.0506912
 </td>
 <td style="text-align:right;">
-0.9608010
+0.8699926
 </td>
 <td style="text-align:right;">
 0.8365140
 </td>
 <td style="text-align:right;">
-1.432899
+1.440449
 </td>
 </tr>
 </tbody>
@@ -220,16 +220,16 @@ NES
 FA_12-16
 </td>
 <td style="text-align:right;">
-0.0358143
+0.0349424
 </td>
 <td style="text-align:right;">
-0.8476057
+0.8365313
 </td>
 <td style="text-align:right;">
 -0.7230966
 </td>
 <td style="text-align:right;">
--1.552061
+-1.544329
 </td>
 </tr>
 <tr>
@@ -240,16 +240,16 @@ FA_12-16
 HexCER_MUFA_22-26
 </td>
 <td style="text-align:right;">
-0.0246098
+0.0238336
 </td>
 <td style="text-align:right;">
-0.8476057
+0.8365313
 </td>
 <td style="text-align:right;">
 -0.7448246
 </td>
 <td style="text-align:right;">
--1.598698
+-1.590734
 </td>
 </tr>
 <tr>
@@ -260,16 +260,16 @@ HexCER_MUFA_22-26
 HexCER_22-26
 </td>
 <td style="text-align:right;">
-0.0246098
+0.0238336
 </td>
 <td style="text-align:right;">
-0.8476057
+0.8365313
 </td>
 <td style="text-align:right;">
 -0.7448246
 </td>
 <td style="text-align:right;">
--1.598698
+-1.590734
 </td>
 </tr>
 <tr>
@@ -277,19 +277,19 @@ HexCER_22-26
 282
 </td>
 <td style="text-align:left;">
-TG_SFA_18
+CE_PUFA_18
 </td>
 <td style="text-align:right;">
-0.0297465
+0.0075773
 </td>
 <td style="text-align:right;">
-0.8476057
+0.4303888
 </td>
 <td style="text-align:right;">
--0.6808962
+-0.9356382
 </td>
 <td style="text-align:right;">
--1.599884
+-1.608159
 </td>
 </tr>
 <tr>
@@ -297,19 +297,19 @@ TG_SFA_18
 283
 </td>
 <td style="text-align:left;">
-CE_PUFA_18
+TG_SFA_18
 </td>
 <td style="text-align:right;">
-0.0049495
+0.0283490
 </td>
 <td style="text-align:right;">
-0.4493671
+0.8365313
 </td>
 <td style="text-align:right;">
--0.9356382
+-0.6808962
 </td>
 <td style="text-align:right;">
--1.604216
+-1.610665
 </td>
 </tr>
 <tr>
@@ -320,16 +320,16 @@ CE_PUFA_18
 CE_17-20
 </td>
 <td style="text-align:right;">
-0.0044301
+0.0040193
 </td>
 <td style="text-align:right;">
-0.4493671
+0.4303888
 </td>
 <td style="text-align:right;">
 -0.6904010
 </td>
 <td style="text-align:right;">
--1.844910
+-1.847602
 </td>
 </tr>
 </tbody>
