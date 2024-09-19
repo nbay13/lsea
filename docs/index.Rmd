@@ -1,6 +1,8 @@
 ---
 title: "A tutorial on Lipid Structure Enrichment Analysis (LSEA)"
-output: rmarkdown::github_document
+output:
+  rmarkdown::github_document:
+  html_document:
 vignette: >
   %\VignetteIndexEntry{demo}
   %\VignetteEngine{knitr::rmarkdown}
