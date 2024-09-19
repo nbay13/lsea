@@ -24,17 +24,19 @@ data(labels)
 ```
 ## CLR transformation
 ```{r}
-#transform composition data (features x samples) using centered log-ratio transformation
+#transform composition data (samples x features) using centered log-ratio transformation
 # note: this is not for normalized abundance data!!
 clr_data <- lsea::clr.transform(comp_data)
+# subsequent functions expect samples as columns
+clr_mat <- data.matrix(t(clr_data))
 ```
 ## Differential composition testing
 ```{r, warning = FALSE, message = FALSE}
 # to perform a paired t-test (samples must be ordered by pair)
-t_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
+t_df <- lsea::two.group.row.test(clr_mat, labels, test = "t", paired = TRUE)
 # to perform unpaired wilcox test
 # note: wilcox test will throw warnings for every row with ties, so suppress those warnings
-w_df <- suppressWarnings(lsea::two.group.row.test(clr_data, labels, test = "w", paired = FALSE))
+w_df <- suppressWarnings(lsea::two.group.row.test(clr_mat, labels, test = "w", paired = FALSE))
 ```
 ##### t-test results ordered by p-value
 ```{r, echo = FALSE}

@@ -14,42 +14,44 @@ data(labels)
 ## CLR transformation
 
 ``` r
-#transform composition data (features x samples) using centered log-ratio transformation
+#transform composition data (samples x features) using centered log-ratio transformation
 # note: this is not for normalized abundance data!!
 clr_data <- lsea::clr.transform(comp_data)
+# subsequent functions expect samples as columns
+clr_mat <- data.matrix(t(clr_data))
 ```
 
 ## Differential composition testing
 
 ``` r
 # to perform a paired t-test (samples must be ordered by pair)
-t_df <- lsea::two.group.row.test(clr_data, labels, test = "t", paired = TRUE)
+t_df <- lsea::two.group.row.test(clr_mat, labels, test = "t", paired = TRUE)
 # to perform unpaired wilcox test
 # note: wilcox test will throw warnings for every row with ties, so suppress those warnings
-w_df <- suppressWarnings(lsea::two.group.row.test(clr_data, labels, test = "w", paired = FALSE))
+w_df <- suppressWarnings(lsea::two.group.row.test(clr_mat, labels, test = "w", paired = FALSE))
 ```
 
 ##### t-test results ordered by p-value
 
-|                |      stat |     mean1 |     mean2 |        dm |    pvalue |      padj |
-|:---------------|----------:|----------:|----------:|----------:|----------:|----------:|
-| TG 56:4-FA20:3 |  4.334250 |  2.168452 | -2.168452 |  4.336905 | 0.0001947 | 0.1738581 |
-| TG 49:3-FA18:3 |  3.825307 |  2.280831 | -2.280831 |  4.561661 | 0.0007361 | 0.2324484 |
-| TG 54:5-FA16:0 | -3.639901 | -1.953318 |  1.953318 | -3.906636 | 0.0011869 | 0.2324484 |
-| FA 20:3        |  3.615850 |  1.678991 | -1.678991 |  3.357982 | 0.0012623 | 0.2324484 |
-| TG 52:6-FA20:5 |  3.603903 |  1.856168 | -1.856168 |  3.712336 | 0.0013015 | 0.2324484 |
-| PC 18:2_20:2   | -3.225378 | -1.399152 |  1.399152 | -2.798303 | 0.0033828 | 0.5034804 |
+|                |      stat |      mean1 |     mean2 |        dm |    pvalue |      padj |
+|:---------------|----------:|-----------:|----------:|----------:|----------:|----------:|
+| TG 56:4-FA20:3 |  4.396256 |  1.4517529 | -2.892099 |  4.343852 | 0.0001654 | 0.1476720 |
+| TG 49:3-FA18:3 |  3.827157 |  2.1155015 | -2.453107 |  4.568608 | 0.0007326 | 0.2358636 |
+| TG 54:5-FA16:0 | -3.664517 | -1.9583616 |  1.941328 | -3.899689 | 0.0011143 | 0.2358636 |
+| FA 20:3        |  3.635246 |  1.3916176 | -1.973312 |  3.364929 | 0.0012011 | 0.2358636 |
+| TG 52:6-FA20:5 |  3.598200 |  2.5091510 | -1.210132 |  3.719283 | 0.0013206 | 0.2358636 |
+| PC 18:2_20:2   | -3.244180 | -0.7073557 |  2.084001 | -2.791356 | 0.0032283 | 0.4616506 |
 
 ##### Wilcoxon test results ordered by p-value
 
-|                |  stat |      mean1 |      mean2 |        dm |    pvalue |      padj |
-|:---------------|------:|-----------:|-----------:|----------:|----------:|----------:|
-| PC 16:1_18:1   | 624.0 |  1.6414554 | -1.6414554 |  3.282911 | 0.0000062 | 0.0055207 |
-| FA 16:0        | 139.5 | -1.5086985 |  1.5086985 | -3.017397 | 0.0000831 | 0.0266629 |
-| CE 18:1        | 140.0 | -1.6537323 |  1.6537323 | -3.307465 | 0.0000896 | 0.0266629 |
-| PE P-16:0/16:1 | 581.0 |  1.3571488 | -1.3571488 |  2.714298 | 0.0001750 | 0.0390769 |
-| TG 46:1-FA16:1 | 558.5 |  1.4270360 | -1.4270360 |  2.854072 | 0.0007628 | 0.1362407 |
-| PE 18:0_18:1   | 554.5 |  0.6344112 | -0.6344112 |  1.268822 | 0.0009795 | 0.1457757 |
+|                | stat |      mean1 |      mean2 |        dm |    pvalue |      padj |
+|:---------------|-----:|-----------:|-----------:|----------:|----------:|----------:|
+| PC 16:1_18:1   |  625 |  3.0007067 | -0.2891511 |  3.289858 | 0.0000017 | 0.0015611 |
+| FA 16:0        |  148 | -0.3826287 |  2.6278213 | -3.010450 | 0.0001078 | 0.0358698 |
+| CE 18:1        |  153 | -0.5924634 |  2.7080542 | -3.300518 | 0.0001607 | 0.0358698 |
+| PE P-16:0/16:1 |  576 |  2.4939921 | -0.2272526 |  2.721245 | 0.0001607 | 0.0358698 |
+| TG 52:6-FA20:5 |  551 |  2.5091510 | -1.2101318 |  3.719283 | 0.0009932 | 0.1446534 |
+| TG 46:1-FA16:1 |  550 |  2.1788510 | -0.6821682 |  2.861019 | 0.0010621 | 0.1446534 |
 
 ## LSEA
 
@@ -92,16 +94,16 @@ NES
 TG_UFA_12-16
 </td>
 <td style="text-align:right;">
-0.0062943
+0.0054934
 </td>
 <td style="text-align:right;">
-0.4303888
+0.3900334
 </td>
 <td style="text-align:right;">
-0.4911824
+0.4918451
 </td>
 <td style="text-align:right;">
-1.711251
+1.718446
 </td>
 </tr>
 <tr>
@@ -112,16 +114,16 @@ TG_UFA_12-16
 UFA_12-16
 </td>
 <td style="text-align:right;">
-0.0062943
+0.0054934
 </td>
 <td style="text-align:right;">
-0.4303888
+0.3900334
 </td>
 <td style="text-align:right;">
-0.4911824
+0.4918451
 </td>
 <td style="text-align:right;">
-1.711251
+1.718446
 </td>
 </tr>
 <tr>
@@ -132,16 +134,16 @@ UFA_12-16
 TG_UFA_16
 </td>
 <td style="text-align:right;">
-0.0329169
+0.0353556
 </td>
 <td style="text-align:right;">
-0.8365313
+0.9231008
 </td>
 <td style="text-align:right;">
-0.5313508
+0.5311323
 </td>
 <td style="text-align:right;">
-1.567926
+1.557537
 </td>
 </tr>
 <tr>
@@ -152,16 +154,16 @@ TG_UFA_16
 CE_SFA_22-26
 </td>
 <td style="text-align:right;">
-0.0075173
+0.0107957
 </td>
 <td style="text-align:right;">
-0.4303888
+0.6131947
 </td>
 <td style="text-align:right;">
-0.9674523
+0.9663300
 </td>
 <td style="text-align:right;">
-1.480016
+1.482900
 </td>
 </tr>
 <tr>
@@ -169,19 +171,19 @@ CE_SFA_22-26
 5
 </td>
 <td style="text-align:left;">
-PE.O_MUFA_18
+dhCer_MUFA_22-26
 </td>
 <td style="text-align:right;">
-0.0506912
+0.0553889
 </td>
 <td style="text-align:right;">
-0.8699926
+0.9231008
 </td>
 <td style="text-align:right;">
-0.8365140
+0.8349662
 </td>
 <td style="text-align:right;">
-1.440449
+1.445714
 </td>
 </tr>
 </tbody>
@@ -220,16 +222,16 @@ NES
 FA_12-16
 </td>
 <td style="text-align:right;">
-0.0349424
+0.0380273
 </td>
 <td style="text-align:right;">
-0.8365313
+0.9231008
 </td>
 <td style="text-align:right;">
--0.7230966
+-0.7234549
 </td>
 <td style="text-align:right;">
--1.544329
+-1.551654
 </td>
 </tr>
 <tr>
@@ -237,19 +239,19 @@ FA_12-16
 280
 </td>
 <td style="text-align:left;">
-HexCER_MUFA_22-26
+TG_SFA_18
 </td>
 <td style="text-align:right;">
-0.0238336
+0.0290663
 </td>
 <td style="text-align:right;">
-0.8365313
+0.9231008
 </td>
 <td style="text-align:right;">
--0.7448246
+-0.6814703
 </td>
 <td style="text-align:right;">
--1.590734
+-1.599892
 </td>
 </tr>
 <tr>
@@ -257,19 +259,19 @@ HexCER_MUFA_22-26
 281
 </td>
 <td style="text-align:left;">
-HexCER_22-26
+HexCER_MUFA_22-26
 </td>
 <td style="text-align:right;">
-0.0238336
+0.0257477
 </td>
 <td style="text-align:right;">
-0.8365313
+0.9231008
 </td>
 <td style="text-align:right;">
--0.7448246
+-0.7464305
 </td>
 <td style="text-align:right;">
--1.590734
+-1.600932
 </td>
 </tr>
 <tr>
@@ -277,19 +279,19 @@ HexCER_22-26
 282
 </td>
 <td style="text-align:left;">
-CE_PUFA_18
+HexCER_22-26
 </td>
 <td style="text-align:right;">
-0.0075773
+0.0257477
 </td>
 <td style="text-align:right;">
-0.4303888
+0.9231008
 </td>
 <td style="text-align:right;">
--0.9356382
+-0.7464305
 </td>
 <td style="text-align:right;">
--1.608159
+-1.600932
 </td>
 </tr>
 <tr>
@@ -297,19 +299,19 @@ CE_PUFA_18
 283
 </td>
 <td style="text-align:left;">
-TG_SFA_18
+CE_PUFA_18
 </td>
 <td style="text-align:right;">
-0.0283490
+0.0049960
 </td>
 <td style="text-align:right;">
-0.8365313
+0.3900334
 </td>
 <td style="text-align:right;">
--0.6808962
+-0.9360713
 </td>
 <td style="text-align:right;">
--1.610665
+-1.611795
 </td>
 </tr>
 <tr>
@@ -320,16 +322,16 @@ TG_SFA_18
 CE_17-20
 </td>
 <td style="text-align:right;">
-0.0040193
+0.0036014
 </td>
 <td style="text-align:right;">
-0.4303888
+0.3900334
 </td>
 <td style="text-align:right;">
--0.6904010
+-0.6900139
 </td>
 <td style="text-align:right;">
--1.847602
+-1.842410
 </td>
 </tr>
 </tbody>
@@ -637,35 +639,6 @@ LCFA
 </tr>
 <tr>
 <td style="text-align:left;">
-CE 18:1
-</td>
-<td style="text-align:left;">
-CE.18.1
-</td>
-<td style="text-align:left;">
-CE
-</td>
-<td style="text-align:left;">
-Sterol
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-MUFA
-</td>
-<td style="text-align:left;">
-LCFA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 TG 56:6-FA22:4
 </td>
 <td style="text-align:left;">
@@ -691,6 +664,35 @@ PUFA
 </td>
 <td style="text-align:left;">
 VLCFA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CE 18:1
+</td>
+<td style="text-align:left;">
+CE.18.1
+</td>
+<td style="text-align:left;">
+CE
+</td>
+<td style="text-align:left;">
+Sterol
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+MUFA
+</td>
+<td style="text-align:left;">
+LCFA
 </td>
 </tr>
 <tr>
