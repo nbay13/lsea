@@ -16,6 +16,6 @@ if(!require("devtools", quietly = TRUE))
 devtools::install_github("nbay13/lsea")
 ```
 ## Usage
-See vignette using example data to perform differential composition testing and LSEA
+See vignette using example data to perform differential composition testing and LSEA <br />
 NOTE: Vignette still being updated after recent changes to LSEA lipid species annotation and enrichment analysis!!
 https://nbay13.github.io/lsea/
