@@ -14,9 +14,11 @@ two.group.row.test <- function(data, labels, test = c("t", "w"), var_equal = FAL
 	if(!is.factor(labels)) {
 	 	message("labels are not factors, converting to factors")
 	 	labels <- factor(labels)
-	} 
-	if(test == "t") ev <- paste("t.test(data[i,] ~ factor(labels), var.equal = ", var_equal, ", paired = ", paired,  ")", sep = "")
-	else if(test == "w") ev <- paste("wilcox.test(data[i,] ~ factor(labels), paired = ", paired, ")", sep = "")
+	}
+	data_a <- data[,labels == levels(labels)[1]]
+	data_b <- data[,labels == levels(labels)[2]]
+	if(test == "t") ev <- paste("t.test(data_a, data_b, var.equal = ", var_equal, ", paired = ", paired,  ")", sep = "")
+	else if(test == "w") ev <- paste("wilcox.test(data_a, data_b, paired = ", paired, ")", sep = "")
 	df <- data.frame(matrix(nrow = nrow(data), ncol = 5))
 	colnames(df) <- c("stat", "mean1", "mean2", "dm", "pvalue")
 	rownames(df) <- rownames(data)
