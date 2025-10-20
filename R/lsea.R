@@ -17,8 +17,8 @@ two.group.row.test <- function(data, labels, test = c("t", "w"), var_equal = FAL
 	}
 	data_a <- data[,labels == levels(labels)[1]]
 	data_b <- data[,labels == levels(labels)[2]]
-	if(test == "t") ev <- paste("t.test(data_a, data_b, var.equal = ", var_equal, ", paired = ", paired,  ")", sep = "")
-	else if(test == "w") ev <- paste("wilcox.test(data_a, data_b, paired = ", paired, ")", sep = "")
+	if(test == "t") ev <- paste("t.test(as.nuemric(data_a[i,]), as.numeric(data_b][i,]), var.equal = ", var_equal, ", paired = ", paired,  ")", sep = "")
+	else if(test == "w") ev <- paste("wilcox.test(as.numeric(data_a[i,]), as.numeric(data_b[i,]), paired = ", paired, ")", sep = "")
 	df <- data.frame(matrix(nrow = nrow(data), ncol = 5))
 	colnames(df) <- c("stat", "mean1", "mean2", "dm", "pvalue")
 	rownames(df) <- rownames(data)
