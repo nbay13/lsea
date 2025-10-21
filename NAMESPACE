@@ -3,6 +3,7 @@
 export(annotate.lipid.species)
 export(annotate.lipid.species.old)
 export(clr.transform)
+export(get.acyl.tails)
 export(get.chain.group)
 export(get.lipid.category)
 export(gg.colors)
