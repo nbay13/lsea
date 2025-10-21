@@ -18,7 +18,7 @@ two.group.row.test <- function(data, labels, test = c("t", "w"), var_equal = FAL
 	data_a <- data[,labels == levels(labels)[1]]
 	data_b <- data[,labels == levels(labels)[2]]
 	if(test == "t") ev <- paste("t.test(as.numeric(data_a[i,]), as.numeric(data_b[i,]), var.equal = ", var_equal, ", paired = ", paired,  ")", sep = "")
-	else if(test == "w") ev <- paste("wilcox.test(as.numeric(data_a[i,]), as.numeric(data_b[i,]), paired = ", paired, ")", sep = "")
+	else if(test == "w") ev <-- paste("wilcox.test(as.numeric(data_a[i,]), as.numeric(data_b[i,]), paired = ", paired, ")", sep = "")
 	df <- data.frame(matrix(nrow = nrow(data), ncol = 5))
 	colnames(df) <- c("stat", "mean1", "mean2", "dm", "pvalue")
 	rownames(df) <- rownames(data)
@@ -184,7 +184,7 @@ get.chain.group <- function(lengths){
 	})))
 }
 
-#' @export get.chain.group
+#' @export get.chain.group.2
 get.chain.group.2 <- function(lengths){
 	group_list <- list(
 		"12-16" = as.character(c(12:16)), 
